@@ -50,7 +50,7 @@ class MovieListTableVC: UITableViewController {
         currentPage += 1
         isLoading = true
         
-        viewModel?.lazyLoadPage(currentPage, completion: { [weak self] (results, error) in
+        viewModel?.loadPage(currentPage, completion: { [weak self] (results, error) in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 guard let movies = results?.movies else {

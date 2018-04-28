@@ -15,10 +15,12 @@ protocol RecentSearchProtocol {
 class RecentSearchTableVC: UITableViewController {
 
     var delegate: RecentSearchProtocol?
-    var items: [String]? = ["Batman", "Superman", "Iron Man", "Devil"]
+    var items: [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        items = UserDefaults.standard.array(forKey: "RecentSearchedMovies") as? [String]
     }
 
     // MARK: - Table view data source

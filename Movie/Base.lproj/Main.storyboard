@@ -26,7 +26,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <connections>
                                     <action selector="didTouchDownTextField:" destination="BYZ-38-t0r" eventType="touchDown" id="X21-if-EOQ"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="AGU-t9-lD8"/>

@@ -36,7 +36,7 @@ class MovieListTableVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MovieListTableViewCell.self), for: indexPath) as? MovieListTableViewCell
 
         // Configure the cell...
-        cell?.viewModel = CellViewModel(movie: dataSource[indexPath.section], cache: cache)
+        cell?.viewModel = MovieListTableCellViewModel(movie: dataSource[indexPath.section], cache: cache)
         cell?.configureView()
         return cell ?? UITableViewCell()
     }

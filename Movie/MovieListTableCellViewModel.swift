@@ -1,5 +1,5 @@
 //
-//  CellViewModel.swift
+//  MovieListTableCellViewModel.swift
 //  Movie
 //
 //  Created by Navneet on 4/28/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CellViewModel {
+struct MovieListTableCellViewModel {
     
     let movie: Movie
     let cache: NSCache<AnyObject, AnyObject>

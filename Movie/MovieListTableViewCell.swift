@@ -18,7 +18,7 @@ class MovieListTableViewCell: UITableViewCell {
     @IBOutlet weak var posterImgView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var viewModel: CellViewModel?
+    var viewModel: MovieListTableCellViewModel?
     
     func configureView() {
         titleLabel.text = viewModel?.movie.title

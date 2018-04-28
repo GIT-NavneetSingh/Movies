@@ -10,25 +10,6 @@ import UIKit
 
 public typealias DownloadBlocks = (_ data: NSData?) -> ()
 
-struct CellViewModel {
-    
-    let movie: Movie
-    let cache: NSCache<AnyObject, AnyObject>
-
-    func fetchImage(from path: String?, completion: @escaping DownloadBlock) {
-        guard
-            let path = path,
-            let url = URL(string: "http://image.tmdb.org/t/p/w92\(path)") else {
-                completion(nil)
-                return
-        }
-
-        let engine = NetworkEngine()
-        engine.download(url, completion: completion)
-    }
-}
-
-
 class MovieListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!

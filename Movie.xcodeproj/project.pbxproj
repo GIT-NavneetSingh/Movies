@@ -17,6 +17,8 @@
 		53F1A67A20906BD700E1E46D /* MovieListTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F1A67920906BD700E1E46D /* MovieListTableVC.swift */; };
 		53F1A67C20906BF100E1E46D /* MovieListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F1A67B20906BF100E1E46D /* MovieListTableViewCell.swift */; };
 		53F1A67E20906D7900E1E46D /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F1A67D20906D7900E1E46D /* MovieListViewModel.swift */; };
+		53F1A68020906F8F00E1E46D /* NetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F1A67F20906F8F00E1E46D /* NetworkEngine.swift */; };
+		53F1A682209096EC00E1E46D /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F1A681209096EC00E1E46D /* ResultModel.swift */; };
 		53F1A6842090976D00E1E46D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F1A6832090976D00E1E46D /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +47,8 @@
 		53F1A67920906BD700E1E46D /* MovieListTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListTableVC.swift; sourceTree = "<group>"; };
 		53F1A67B20906BF100E1E46D /* MovieListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListTableViewCell.swift; sourceTree = "<group>"; };
 		53F1A67D20906D7900E1E46D /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
+		53F1A67F20906F8F00E1E46D /* NetworkEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEngine.swift; sourceTree = "<group>"; };
+		53F1A681209096EC00E1E46D /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
 		53F1A6832090976D00E1E46D /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +97,8 @@
 				53F1A67D20906D7900E1E46D /* MovieListViewModel.swift */,
 				53F1A67920906BD700E1E46D /* MovieListTableVC.swift */,
 				53F1A67B20906BF100E1E46D /* MovieListTableViewCell.swift */,
+				53F1A67F20906F8F00E1E46D /* NetworkEngine.swift */,
+				53F1A681209096EC00E1E46D /* ResultModel.swift */,
 				5347988820905F14004F1F43 /* Main.storyboard */,
 				5347988E20905F16004F1F43 /* Assets.xcassets */,
 				5347989020905F16004F1F43 /* LaunchScreen.storyboard */,
@@ -214,8 +220,10 @@
 			files = (
 				5305C5002091E68700327E8E /* RecentSearchTableVC.swift in Sources */,
 				5347988D20905F14004F1F43 /* Movie.xcdatamodeld in Sources */,
+				53F1A68020906F8F00E1E46D /* NetworkEngine.swift in Sources */,
 				53F1A6842090976D00E1E46D /* SearchViewController.swift in Sources */,
 				53F1A67A20906BD700E1E46D /* MovieListTableVC.swift in Sources */,
+				53F1A682209096EC00E1E46D /* ResultModel.swift in Sources */,
 				53F1A67C20906BF100E1E46D /* MovieListTableViewCell.swift in Sources */,
 				5347988520905F14004F1F43 /* AppDelegate.swift in Sources */,
 				53F1A67E20906D7900E1E46D /* MovieListViewModel.swift in Sources */,

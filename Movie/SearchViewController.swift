@@ -105,10 +105,13 @@ class SearchViewController: UIViewController {
     
     fileprivate func persistSearchQuery(_ query: String) {
         let userDefault = UserDefaults.standard
-        if var list = userDefault.mutableSetValue(forKey: "RecentSearchedMovies") as? Set<String> {
-            list.insert(query)
-            let arr = [String](list)
-            userDefault.set(arr, forKey: "RecentSearchedMovies")
+        if var list = userDefault.array(forKey: "RecentSearchedMovies") as? [String] {
+            if let index = list.index(of: query) {
+                list.remove(at: index)
+            }
+            
+            list.insert(query, at: 0)
+            userDefault.set(list, forKey: "RecentSearchedMovies")
             userDefault.synchronize()
         }
     }

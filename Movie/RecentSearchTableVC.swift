@@ -15,8 +15,9 @@ protocol RecentSearchProtocol {
 class RecentSearchTableVC: UITableViewController {
 
     var delegate: RecentSearchProtocol?
-    var items: [String]?
-    
+    private var items: [String]?
+    private let MAX_ROW = 10
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,7 +26,8 @@ class RecentSearchTableVC: UITableViewController {
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items?.count ?? 0
+        guard let count = items?.count, count < MAX_ROW else { return MAX_ROW }
+        return count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

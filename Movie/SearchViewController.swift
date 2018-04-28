@@ -24,6 +24,7 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         title = "Search"
+        txtField.becomeFirstResponder()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -35,7 +36,9 @@ class SearchViewController: UIViewController {
         case .Detail:
             let destinationVC = segue.destination as? MovieListTableVC
             destinationVC?.viewModel = MovieListViewModel(movie: searchQuery, results: sender as? Results)
-
+            
+            persistSearchQuery(searchQuery)
+            
         case .Popover:
             let recentSearchVC = segue.destination as? RecentSearchTableVC
             recentSearchVC?.delegate = self
@@ -96,6 +99,18 @@ class SearchViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Persist Searches
+    
+    fileprivate func persistSearchQuery(_ query: String) {
+        let userDefault = UserDefaults.standard
+        if var list = userDefault.mutableSetValue(forKey: "RecentSearchedMovies") as? Set<String> {
+            list.insert(query)
+            let arr = [String](list)
+            userDefault.set(arr, forKey: "RecentSearchedMovies")
+            userDefault.synchronize()
+        }
     }
 }
 

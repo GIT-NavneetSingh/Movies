@@ -80,6 +80,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		531B5CBD2095CF0300193FCE /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				53F1A67F20906F8F00E1E46D /* NetworkEngine.swift */,
+				53F1A681209096EC00E1E46D /* ResultModel.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		531B5CBE2095CF1600193FCE /* MovieList */ = {
+			isa = PBXGroup;
+			children = (
+				53F1A67D20906D7900E1E46D /* MovieListViewModel.swift */,
+				53F1A67920906BD700E1E46D /* MovieListTableVC.swift */,
+				5305E5862094A17200B6C1E6 /* MovieListTableCellViewModel.swift */,
+				53F1A67B20906BF100E1E46D /* MovieListTableViewCell.swift */,
+			);
+			path = MovieList;
+			sourceTree = "<group>";
+		};
+		531B5CBF2095CF4300193FCE /* RecentSearch */ = {
+			isa = PBXGroup;
+			children = (
+				5305C4FF2091E68700327E8E /* RecentSearchTableVC.swift */,
+			);
+			path = RecentSearch;
+			sourceTree = "<group>";
+		};
+		531B5CC02095CF4F00193FCE /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				53F1A6832090976D00E1E46D /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		5347987820905F14004F1F43 = {
 			isa = PBXGroup;
 			children = (
@@ -104,14 +140,10 @@
 			isa = PBXGroup;
 			children = (
 				5347988420905F14004F1F43 /* AppDelegate.swift */,
-				53F1A6832090976D00E1E46D /* SearchViewController.swift */,
-				5305C4FF2091E68700327E8E /* RecentSearchTableVC.swift */,
-				53F1A67D20906D7900E1E46D /* MovieListViewModel.swift */,
-				53F1A67920906BD700E1E46D /* MovieListTableVC.swift */,
-				5305E5862094A17200B6C1E6 /* MovieListTableCellViewModel.swift */,
-				53F1A67B20906BF100E1E46D /* MovieListTableViewCell.swift */,
-				53F1A67F20906F8F00E1E46D /* NetworkEngine.swift */,
-				53F1A681209096EC00E1E46D /* ResultModel.swift */,
+				531B5CC02095CF4F00193FCE /* Search */,
+				531B5CBF2095CF4300193FCE /* RecentSearch */,
+				531B5CBE2095CF1600193FCE /* MovieList */,
+				531B5CBD2095CF0300193FCE /* Networking */,
 				5347988820905F14004F1F43 /* Main.storyboard */,
 				5347988E20905F16004F1F43 /* Assets.xcassets */,
 				5347989020905F16004F1F43 /* LaunchScreen.storyboard */,
@@ -483,7 +515,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Movie/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com..Movie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -498,7 +533,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Movie/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com..Movie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -514,7 +552,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = MovieTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com..MovieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -531,7 +573,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = MovieTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com..MovieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

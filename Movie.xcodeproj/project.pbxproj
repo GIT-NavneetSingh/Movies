@@ -11,6 +11,7 @@
 		5305E5872094A17200B6C1E6 /* MovieListTableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5305E5862094A17200B6C1E6 /* MovieListTableCellViewModel.swift */; };
 		531B5CC22096063E00193FCE /* SearchViewControllerSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B5CC12096063E00193FCE /* SearchViewControllerSpecs.swift */; };
 		531B5CC420964CC900193FCE /* MockNetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B5CC320964CC900193FCE /* MockNetworkEngine.swift */; };
+		531B5CC620964D7F00193FCE /* RecentSearchTableVCSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B5CC520964D7F00193FCE /* RecentSearchTableVCSpecs.swift */; };
 		5347988520905F14004F1F43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5347988420905F14004F1F43 /* AppDelegate.swift */; };
 		5347988A20905F14004F1F43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5347988820905F14004F1F43 /* Main.storyboard */; };
 		5347988F20905F16004F1F43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5347988E20905F16004F1F43 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 		5305E5862094A17200B6C1E6 /* MovieListTableCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListTableCellViewModel.swift; sourceTree = "<group>"; };
 		531B5CC12096063E00193FCE /* SearchViewControllerSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewControllerSpecs.swift; sourceTree = "<group>"; };
 		531B5CC320964CC900193FCE /* MockNetworkEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkEngine.swift; sourceTree = "<group>"; };
+		531B5CC520964D7F00193FCE /* RecentSearchTableVCSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableVCSpecs.swift; sourceTree = "<group>"; };
 		5347988120905F14004F1F43 /* Movie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5347988420905F14004F1F43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5347988920905F14004F1F43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -120,6 +122,30 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		531B5CC72096504800193FCE /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				531B5CC12096063E00193FCE /* SearchViewControllerSpecs.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		531B5CC82096505800193FCE /* RecentSearch */ = {
+			isa = PBXGroup;
+			children = (
+				531B5CC520964D7F00193FCE /* RecentSearchTableVCSpecs.swift */,
+			);
+			path = RecentSearch;
+			sourceTree = "<group>";
+		};
+		531B5CC92096506600193FCE /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				531B5CC320964CC900193FCE /* MockNetworkEngine.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		5347987820905F14004F1F43 = {
 			isa = PBXGroup;
 			children = (
@@ -160,8 +186,9 @@
 			isa = PBXGroup;
 			children = (
 				5347989C20905F16004F1F43 /* MovieTests.swift */,
-				531B5CC12096063E00193FCE /* SearchViewControllerSpecs.swift */,
-				531B5CC320964CC900193FCE /* MockNetworkEngine.swift */,
+				531B5CC72096504800193FCE /* Search */,
+				531B5CC82096505800193FCE /* RecentSearch */,
+				531B5CC92096506600193FCE /* Networking */,
 				5347989E20905F16004F1F43 /* Info.plist */,
 			);
 			path = MovieTests;
@@ -369,6 +396,7 @@
 				531B5CC420964CC900193FCE /* MockNetworkEngine.swift in Sources */,
 				5347989D20905F16004F1F43 /* MovieTests.swift in Sources */,
 				531B5CC22096063E00193FCE /* SearchViewControllerSpecs.swift in Sources */,
+				531B5CC620964D7F00193FCE /* RecentSearchTableVCSpecs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,7 +20,7 @@ class MovieListTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = viewModel?.movie.uppercased()
+        title = viewModel?.movie?.uppercased()
         dataSource = viewModel?.results?.movies ?? []
     }
 

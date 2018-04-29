@@ -17,6 +17,10 @@ class SearchViewController: UIViewController {
     
     private var searchQuery = ""
 
+    lazy var engine: NetworkEngine = {
+        return NetworkEngine()
+    }()
+    
     @IBOutlet weak var txtField: UITextField!
     
     override func viewDidLoad() {
@@ -51,6 +55,11 @@ class SearchViewController: UIViewController {
     // MARK: - IBAction
     
     @IBAction func didTouchDownTextField(_ sender: UITextField) {
+        guard
+            let list = UserDefaults.standard.array(forKey: "RecentSearchedMovies") as? [String],
+            !list.isEmpty
+            else { return }
+        
         performSegue(withIdentifier: "PopoverSegueID", sender: sender)
     }
     
@@ -76,14 +85,13 @@ class SearchViewController: UIViewController {
         
         searchQuery = queryString
 
-        let engine = NetworkEngine()
         engine.fetch(url) { [weak self] (results, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     self?.showOkAlert(with: "Error", message: "Something went wrong")
                 } else {
                     guard (results?.movies.count ?? 0) > 0 else {
-                        self?.showOkAlert(with: "Error", message: "Movie not found, try something else")
+                        self?.showOkAlert(with: nil, message: "Movie not found, try something else")
                         return
                     }
                     
@@ -112,6 +120,9 @@ class SearchViewController: UIViewController {
             
             list.insert(query, at: 0)
             userDefault.set(list, forKey: "RecentSearchedMovies")
+            userDefault.synchronize()
+        } else {
+            userDefault.set([query], forKey: "RecentSearchedMovies")
             userDefault.synchronize()
         }
     }

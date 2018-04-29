@@ -11,10 +11,11 @@ import UIKit
 class MovieListTableVC: UITableViewController {
     
     var viewModel: MovieListViewModel?
-    var dataSource: [Movie] = []
-    var currentPage: Int = 1
-    var isLoading = false
-    var cache = NSCache<AnyObject, AnyObject>()
+    
+    private var dataSource: [Movie] = []
+    private var currentPage: Int = 1
+    private var isLoading = false
+    private var cache = NSCache<AnyObject, AnyObject>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,20 @@ class MovieListTableVC: UITableViewController {
         return cell ?? UITableViewCell()
     }
     
+    fileprivate func fetchResults() {
+        viewModel?.loadPage(currentPage, completion: { [weak self] (results, error) in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                guard let movies = results?.movies, !movies.isEmpty else {
+                    self?.currentPage -= 1
+                    return
+                }
+                self?.dataSource.append(contentsOf: movies)
+                self?.tableView.reloadData()
+            }
+        })
+    }
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard indexPath.section == dataSource.count - 1,
             currentPage < (viewModel?.results?.totalPages ?? 0),
@@ -50,16 +65,6 @@ class MovieListTableVC: UITableViewController {
         currentPage += 1
         isLoading = true
         
-        viewModel?.loadPage(currentPage, completion: { [weak self] (results, error) in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                guard let movies = results?.movies else {
-                    self?.currentPage -= 1
-                    return
-                }
-                self?.dataSource.append(contentsOf: movies)
-                self?.tableView.reloadData()
-            }
-        })
+        fetchResults()
     }
 }

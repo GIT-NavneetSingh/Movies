@@ -79,9 +79,7 @@ class SearchViewController: UIViewController {
             let queryString = queryString,
             let encodedQueryString = queryString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
             let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=1")
-            else {
-                return
-        }
+            else { return }
         
         searchQuery = queryString
 

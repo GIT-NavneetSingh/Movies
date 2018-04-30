@@ -42,7 +42,7 @@ class MovieListTableViewCellSpecs: QuickSpec {
         describe("Verify cell state") {
             context("when configured", closure: {
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
-                let cache = NSCache<AnyObject, AnyObject>()
+                let cache = NSCache<NSString, UIImage>()
                 let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
                 
                 beforeEach {
@@ -67,7 +67,7 @@ class MovieListTableViewCellSpecs: QuickSpec {
         describe("Verify download image") {
             context("when poster path empty", closure: {
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: nil)
-                let cache = NSCache<AnyObject, AnyObject>()
+                let cache = NSCache<NSString, UIImage>()
                 let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
                 
                 let serviceController = MockFailureServiceController()
@@ -84,7 +84,7 @@ class MovieListTableViewCellSpecs: QuickSpec {
             
             context("when poster path is not empty and receives response", closure: {
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
-                let cache = NSCache<AnyObject, AnyObject>()
+                let cache = NSCache<NSString, UIImage>()
                 let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
                 
                 let serviceController = MockSuccessServiceController()
@@ -105,7 +105,7 @@ class MovieListTableViewCellSpecs: QuickSpec {
             
             context("when poster path is not empty and receives error", closure: {
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
-                let cache = NSCache<AnyObject, AnyObject>()
+                let cache = NSCache<NSString, UIImage>()
                 let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
                 
                 let serviceController = MockFailureServiceController()

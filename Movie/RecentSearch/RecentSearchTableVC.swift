@@ -15,30 +15,23 @@ protocol RecentSearchProtocol {
 class RecentSearchTableVC: UITableViewController {
 
     var delegate: RecentSearchProtocol?
-    private var items: [String]?
-    private let MAX_ROW = 10
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        items = UserDefaults.standard.array(forKey: "RecentSearchedMovies") as? [String]
-    }
-
+    let viewModel = RecentSearchTableViewModel()
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let count = items?.count, count < MAX_ROW else { return MAX_ROW }
+        guard let count = viewModel.items?.count, count < viewModel.maxRows else { return viewModel.maxRows }
         return count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellReuseIdentifier", for: indexPath)
         // Configure the cell...
-        cell.textLabel?.text = items?[indexPath.row]
+        cell.textLabel?.text = viewModel.items?[indexPath.row]
         return cell
     }
 
     // MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.controller(self, didSelectItem: items?[indexPath.row])
+        delegate?.controller(self, didSelectItem: viewModel.items?[indexPath.row])
     }
 }

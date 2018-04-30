@@ -11,13 +11,6 @@ import Quick
 import Nimble
 @testable import Movie
 
-private class MockNetworkEngine: NetworkEngine {
-    var isCalled = false
-    override func fetch(_ url: URL, completion: @escaping CompletionBlock) {
-        isCalled = true
-    }
-}
-
 class MovieListViewModelSpecs: QuickSpec {
     
     override func spec() {
@@ -35,29 +28,6 @@ class MovieListViewModelSpecs: QuickSpec {
                 it("should have requied attributes", closure: {
                     expect(viewModel.movie) == movie.title
                     expect(viewModel.results?.movies.count) === results.movies.count
-                })
-            })
-        }
-        
-        describe("Verify fetch") {
-            context("when called", closure: {
-                var engine: MockNetworkEngine!
-                beforeEach {
-                    engine = MockNetworkEngine()
-                    viewModel.engine = engine
-                }
-                
-                it("should called fetch of network engine if query is correct", closure: {
-                    viewModel.loadPage(2, completion: { _,_  in
-                        expect(engine.isCalled).to(beTruthy())
-                    })
-                })
-                
-                it("should not called network engine if query is incorrect", closure: {
-                    viewModel = MovieListViewModel(movie: nil, results: results)
-                    viewModel.loadPage(2, completion: { _,_  in
-                        expect(engine.isCalled).notTo(beTruthy())
-                    })
                 })
             })
         }

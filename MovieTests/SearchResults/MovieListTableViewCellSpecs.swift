@@ -17,17 +17,17 @@ class MovieListTableViewCellSpecs: QuickSpec {
         
         class MockSuccessServiceController: DataDownloadable {
             var isCalled = false
-            func download(_ url: URL, completion: @escaping DownloadBlock) {
+            func downloadImage(from path: String, completion: DownloadBlock) {
                 isCalled = true
-                completion(Data())
+                completion?(Data())
             }
         }
     
         class MockFailureServiceController: DataDownloadable {
             var isCalled = false
-            func download(_ url: URL, completion: @escaping DownloadBlock) {
+            func downloadImage(from path: String, completion: DownloadBlock) {
                 isCalled = true
-                completion(nil)
+                completion?(nil)
             }
         }
         

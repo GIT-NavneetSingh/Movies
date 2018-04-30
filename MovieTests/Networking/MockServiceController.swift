@@ -9,40 +9,35 @@
 import Foundation
 @testable import Movie
 
-class MockError: Error {
+private class MockError: Error {
     
 }
 
 class MockSuccessMoviesServiceControllerWithResults: MoviesFetchable {
     var isCalled = false
-    func fetch(_ url: URL, completion: @escaping CompletionBlock) {
+    func fetch(for movie: String, page: Int, completion: CompletionBlock) {
         isCalled = true
-
+        
         let movie = Movie(title: "Batman", overview: "Sample", releaseDate: "2012-05-01", posterPath: "somevalue")
         let results = MovieResults(page: 1, totalPages: 6, totalResults: 100, movies: [movie])
-        completion(results, nil)
-    }
-    
-    func download(_ url: URL, completion: @escaping DownloadBlock) {
-        isCalled = true
-        completion(Data())
+        completion?(results, nil)
     }
 }
 
 class MockSuccessMoviesServiceControllerWithEmptyResults: MoviesFetchable {
     var isCalled = false
-    func fetch(_ url: URL, completion: @escaping CompletionBlock) {
+    func fetch(for movie: String, page: Int, completion: CompletionBlock) {
         isCalled = true
         
         let results = MovieResults(page: 1, totalPages: 6, totalResults: 100, movies: [])
-        completion(results, nil)
+        completion?(results, nil)
     }
 }
 
 class MockFailureMoviesServiceController: MoviesFetchable {
     var isCalled = false
-    func fetch(_ url: URL, completion: @escaping CompletionBlock) {
+    func fetch(for movie: String, page: Int, completion: CompletionBlock) {
         isCalled = true
-        completion(nil, MockError())
+        completion?(nil, MockError())
     }
 }

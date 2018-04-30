@@ -71,15 +71,7 @@ class SearchViewController: UIViewController {
             return
         }
         
-        guard
-            let encodedQueryString = queryString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=1")
-            else {
-                showOkAlert(with: nil, message: "Something went wrong, try something else")
-                return
-        }
-        
-        serviceController.fetch(url, completion: { [weak self] (results, error) in
+        serviceController.fetch(for: queryString, page: 1) { [weak self] (results, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     self?.showOkAlert(with: "Error", message: "Something went wrong")
@@ -93,7 +85,7 @@ class SearchViewController: UIViewController {
                     self?.performSegue(withIdentifier: "DetailDegueID", sender: results)
                 }
             }
-        })
+        }
     }
     
     // MARK: - Show alert

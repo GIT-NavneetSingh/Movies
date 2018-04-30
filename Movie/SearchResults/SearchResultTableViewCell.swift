@@ -33,21 +33,19 @@ class SearchResultsTableViewCell: UITableViewCell {
             activityIndicator.isHidden = true
             posterImgView.image = UIImage(data: cachedData)
         } else {
-            activityIndicator.isHidden = false
-            activityIndicator.startAnimating()
             fetchImage(from: path)
         }
     }
     
     func fetchImage(from path: String?, serviceController: DataDownloadable = ServiceController()) {
-        guard
-            let path = path,
-            let encodedPath = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: "http://image.tmdb.org/t/p/w92\(encodedPath)") else {
-                return
+        guard let path = path else {
+            return
         }
         
-        serviceController.download(url) { [weak self] data in
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+
+        serviceController.downloadImage(from: path) { [weak self] data in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 self?.activityIndicator.isHidden = true

@@ -60,18 +60,15 @@ class SearchResultsVC: UITableViewController {
     // MARK: - Fetch results
     
     func fetchResults(for queryString: String?, page: Int, serviceController: MoviesFetchable = ServiceController()) {
-        guard
-            let queryString = queryString,
-            let encodedQueryString = queryString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=\(page)") else { return }
-        
-        serviceController.fetch(url) { [weak self] (results, error) in
+        guard let queryString = queryString else { return }
+        serviceController.fetch(for: queryString, page: page) { [weak self] (results, error) in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 guard let movies = results?.movies, !movies.isEmpty else {
                     self?.currentPage -= 1
                     return
                 }
+                
                 self?.movies.append(contentsOf: movies)
                 self?.tableView.reloadData()
             }

@@ -29,4 +29,8 @@ struct SearchResultsViewModel {
     mutating func appendMovieResults(_ newMovies: [Movie]) {
         movies?.append(contentsOf: newMovies)
     }
+    
+    func removeAllCachedImages() {
+        cache.removeAllObjects()
+    }
 }

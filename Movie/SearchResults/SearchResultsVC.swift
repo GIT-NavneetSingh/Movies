@@ -23,6 +23,10 @@ class SearchResultsVC: UITableViewController {
         title = viewModel?.title
     }
 
+    deinit {
+        viewModel?.removeAllCachedImages()
+    }
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel?.movies?.count ?? 0

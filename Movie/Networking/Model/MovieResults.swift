@@ -1,5 +1,5 @@
 //
-//  ResultModel.swift
+//  MovieResults.swift
 //  Movie
 //
 //  Created by Navneet on 4/25/18.
@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import UIKit
 
-struct MovieResults: Codable {
+public struct MovieResults: Codable {
     let page: Int
     let totalPages: Int
     let totalResults: Int

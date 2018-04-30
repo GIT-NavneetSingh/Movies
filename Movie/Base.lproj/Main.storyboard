@@ -119,9 +119,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="210.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pmh-wQ-sIq">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_image" translatesAutoresizingMaskIntoConstraints="NO" id="Pmh-wQ-sIq">
                                             <rect key="frame" x="267" y="16" width="92" height="138"/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="138" id="AGR-LJ-yoo"/>
                                                 <constraint firstAttribute="width" constant="92" id="Ymd-NF-vEQ"/>
@@ -206,4 +206,7 @@
             <point key="canvasLocation" x="-175" y="144"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="default_image" width="92" height="138"/>
+    </resources>
 </document>

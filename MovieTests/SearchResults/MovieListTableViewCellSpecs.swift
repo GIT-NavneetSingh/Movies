@@ -19,7 +19,7 @@ class MovieListTableViewCellSpecs: QuickSpec {
             var isCalled = false
             func downloadImage(from path: String, completion: DownloadBlock) {
                 isCalled = true
-                completion?(Data())
+                completion?(UIImagePNGRepresentation(#imageLiteral(resourceName: "default_image")))
             }
         }
     
@@ -32,10 +32,6 @@ class MovieListTableViewCellSpecs: QuickSpec {
         }
         
         var cell: SearchResultsTableViewCell!
-        let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
-        let cache = NSCache<AnyObject, AnyObject>()
-        let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
-        
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SearchResultsVC.self)) as! SearchResultsVC
@@ -45,7 +41,12 @@ class MovieListTableViewCellSpecs: QuickSpec {
         
         describe("Verify cell state") {
             context("when configured", closure: {
+                let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
+                let cache = NSCache<AnyObject, AnyObject>()
+                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
+                
                 beforeEach {
+                    cell.viewModel = viewModel
                     cell.configureView()
                 }
                 
@@ -64,33 +65,58 @@ class MovieListTableViewCellSpecs: QuickSpec {
         }
         
         describe("Verify download image") {
-            context("when image is not cached", closure: {
+            context("when poster path empty", closure: {
+                let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: nil)
+                let cache = NSCache<AnyObject, AnyObject>()
+                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
+                
+                let serviceController = MockFailureServiceController()
                 beforeEach {
+                    cell.viewModel = viewModel
+                    cell.serviceController = serviceController
                     cell.configureView()
                 }
                 
-                context("when poster path empty", closure: {
-                    let serviceHandler = MockFailureServiceController()
-                    it("should present an alert", closure: {
-                        cell.fetchImage(from: nil, serviceController: serviceHandler)
-                        expect(serviceHandler.isCalled).notTo(beTruthy())
-                    })
+                it("should not called serviceController" , closure: {
+                    expect(serviceController.isCalled).notTo(beTruthy())
+                })
+            })
+            
+            context("when poster path is not empty and receives response", closure: {
+                let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
+                let cache = NSCache<AnyObject, AnyObject>()
+                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
+                
+                let serviceController = MockSuccessServiceController()
+                beforeEach {
+                    cell.viewModel = viewModel
+                    cell.serviceController = serviceController
+                    cell.configureView()
+                }
+
+                it("should called serviceController", closure: {
+                    expect(serviceController.isCalled).to(beTruthy())
                 })
                 
-                context("when poster path is not empty and receives response", closure: {
-                    let serviceHandler = MockSuccessServiceController()
-                    it("should push list VC", closure: {
-                        cell.fetchImage(from: movie.posterPath, serviceController: serviceHandler)
-                        expect(serviceHandler.isCalled).to(beTruthy())
-                    })
+                it("should set image to imageview" , closure: {
+                    expect(cell.posterImgView.image).notTo(beNil())
                 })
+            })
+            
+            context("when poster path is not empty and receives error", closure: {
+                let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
+                let cache = NSCache<AnyObject, AnyObject>()
+                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
                 
-                context("when poster path is not empty and receives error", closure: {
-                    let serviceHandler = MockFailureServiceController()
-                    it("should present an alert", closure: {
-                        cell.fetchImage(from: movie.posterPath, serviceController: serviceHandler)
-                        expect(serviceHandler.isCalled).to(beTruthy())
-                    })
+                let serviceController = MockFailureServiceController()
+                beforeEach {
+                    cell.viewModel = viewModel
+                    cell.serviceController = serviceController
+                    cell.configureView()
+                }
+                
+                it("should not called serviceController" , closure: {
+                    expect(serviceController.isCalled).to(beTruthy())
                 })
             })
         }

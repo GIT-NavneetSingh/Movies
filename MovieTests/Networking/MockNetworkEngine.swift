@@ -22,6 +22,11 @@ class MockSuccessNetworkEngineWithResults: NetworkEngine {
         let results = Results(page: 1, totalPages: 6, totalResults: 100, movies: [movie])
         completion(results, nil)
     }
+    
+    func download(_ url: URL, completion: @escaping DownloadBlock) {
+        isCalled = true
+        completion(Data())
+    }
 }
 
 class MockSuccessNetworkEngineWithEmptyResults: NetworkEngine {
@@ -39,5 +44,10 @@ class MockFailureNetworkEngine: NetworkEngine {
     func fetch(_ url: URL, completion: @escaping CompletionBlock) {
         isCalled = true
         completion(nil, MockError())
+    }
+    
+    func download(_ url: URL, completion: @escaping DownloadBlock) {
+        isCalled = true
+        completion(nil)
     }
 }

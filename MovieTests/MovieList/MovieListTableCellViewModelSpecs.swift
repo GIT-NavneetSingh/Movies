@@ -25,7 +25,7 @@ class MovieListTableCellViewModelSpecs: QuickSpec {
         describe("Verify state of view model") {
             context("when initialised", closure: {
                 it("should have requied attributes", closure: {
-                    expect(viewModel.movie.title) == movie.title
+                    expect(viewModel.movie?.title) == movie.title
                     expect(viewModel.cache).notTo(beNil())
                 })
             })

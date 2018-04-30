@@ -18,21 +18,11 @@ protocol NetworkEngine {
 }
 
 extension NetworkEngine {
-    
     func fetch(_ url: URL, completion: @escaping CompletionBlock) {
-        print(url.absoluteString)
+        
     }
     
-    func download(_ url: URL, completion: @escaping DownloadBlock) {        
-        let downloadTask = URLSession.shared.downloadTask(with: url) { (tempURL, response, error) in
-            guard let url = tempURL else {
-                completion(nil)
-                return
-            }
-            
-            completion(try? Data(contentsOf: url))
-        }
+    func download(_ url: URL, completion: @escaping DownloadBlock) {
         
-        downloadTask.resume()
     }
 }

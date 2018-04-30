@@ -21,15 +21,15 @@ class MovieListTableViewCell: UITableViewCell {
     var viewModel: MovieListTableCellViewModel?
     
     func configureView() {
-        titleLabel.text = viewModel?.movie.title
-        releaseDateLabel.text = viewModel?.movie.releaseDate
-        overviewLabel.text = viewModel?.movie.overview
+        titleLabel.text = viewModel?.movie?.title
+        releaseDateLabel.text = viewModel?.movie?.releaseDate
+        overviewLabel.text = viewModel?.movie?.overview
         
         setImage()
     }
     
     fileprivate func setImage() {
-        guard let path = viewModel?.movie.posterPath else { return }
+        guard let path = viewModel?.movie?.posterPath else { return }
         
         if let cachedData = viewModel?.cache.object(forKey: path as AnyObject) as? Data {
             activityIndicator.isHidden = true
@@ -37,14 +37,25 @@ class MovieListTableViewCell: UITableViewCell {
         } else {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
-            viewModel?.fetchImage(from: path, completion: { [weak self] data in
-                DispatchQueue.main.async {
-                    self?.activityIndicator.stopAnimating()
-                    self?.activityIndicator.isHidden = true
-                    self?.posterImgView.image = UIImage(data: data as Data? ?? Data())
-                    self?.viewModel?.cache.setObject(data as AnyObject, forKey: path as AnyObject)
-                }
-            })
+            fetchImage(from: path)
+        }
+    }
+    
+    func fetchImage(from path: String?, serviceHandler: NetworkEngine = DownloadServiceHandler()) {
+        guard
+            let path = path,
+            let encodedPath = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let url = URL(string: "http://image.tmdb.org/t/p/w92\(encodedPath)") else {
+                return
+        }
+        
+        serviceHandler.download(url) { [weak self] data in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                self?.activityIndicator.isHidden = true
+                self?.posterImgView.image = UIImage(data: data as Data? ?? Data())
+                self?.viewModel?.cache.setObject(data as AnyObject, forKey: path as AnyObject)
+            }
         }
     }
     
@@ -54,5 +65,21 @@ class MovieListTableViewCell: UITableViewCell {
         overviewLabel.text = nil
         posterImgView.image = nil
         activityIndicator.isHidden = true
+    }
+}
+
+struct DownloadServiceHandler : NetworkEngine {
+    
+    func download(_ url: URL, completion: @escaping DownloadBlock) {
+        let downloadTask = URLSession.shared.downloadTask(with: url) { (tempURL, response, error) in
+            guard let url = tempURL else {
+                completion(nil)
+                return
+            }
+            
+            completion(try? Data(contentsOf: url))
+        }
+        
+        downloadTask.resume()
     }
 }

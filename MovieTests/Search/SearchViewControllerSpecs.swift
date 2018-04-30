@@ -67,52 +67,39 @@ class SearchViewControllerSpecs: QuickSpec {
             })
         }
         
-        describe("Verify action on the search button") {
-            context("when textfield is empty", closure: {
-                beforeEach {
-                    controller.txtField.text = ""
-                }
-                
+        describe("Verify fetch results") {
+            context("when query string is empty", closure: {
+                let serviceHandler = MockSuccessNetworkEngineWithResults()
                 it("should present an alert", closure: {
-                    controller.searchAction(controller)
+                    controller.fetchResults(for: nil, service: serviceHandler)
+                    expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })
             })
             
             context("when textfield is not empty and results are there", closure: {
-                var query: String!
-                beforeEach {
-                    query = "Batman"
-                    controller.txtField.text = query
-                    controller.engine = MockSuccessNetworkEngineWithResults()
-                    controller.searchAction(controller)
-                }
-                
+                let serviceHandler = MockSuccessNetworkEngineWithResults()
                 it("should push list VC", closure: {
+                    controller.fetchResults(for: "Batman", service: MockSuccessNetworkEngineWithResults())
+                    expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.navigationController?.topViewController is MovieListTableVC).toEventually(beTruthy())
                 })
             })
             
             context("when textfield is not empty and results are empty", closure: {
-                beforeEach {
-                    controller.txtField.text = "Batman"
-                    controller.engine = MockSuccessNetworkEngineWithEmptyResults()
-                }
-                
+                let serviceHandler = MockSuccessNetworkEngineWithEmptyResults()
                 it("should present an alert", closure: {
-                    controller.searchAction(controller)
+                    controller.fetchResults(for: "Batman", service: MockSuccessNetworkEngineWithEmptyResults())
+                    expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })
             })
             
             context("when textfield is not empty and there is an error", closure: {
-                beforeEach {
-                    controller.txtField.text = "Batman"
-                    controller.engine = MockFailureNetworkEngine()
-                }
-                
+                let serviceHandler = MockFailureNetworkEngine()
                 it("should present an alert", closure: {
-                    controller.searchAction(controller)
+                    controller.fetchResults(for: "Batman", service: MockFailureNetworkEngine())
+                    expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })
             })

@@ -10,21 +10,22 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    @IBOutlet weak var txtField: UITextField!
+
     private enum SegueID: String {
         case Detail = "DetailDegueID"
         case Popover = "PopoverSegueID"
     }
     
     private var searchQuery: String?
-    let viewModel = SearchViewModel(title: "Search")
     
-    @IBOutlet weak var txtField: UITextField!
+    lazy var serviceHandler = SearchServiceHandler()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        title = viewModel.title
+        title = "Search"
         txtField.becomeFirstResponder()
     }
     
@@ -61,18 +62,26 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func searchAction(_ sender: Any) {
-        guard let queryString = txtField.text, !queryString.isEmpty else {
-            showOkAlert(with: nil, message: "Enter a movie name")
-            return
-        }
-        
-        fetchResults(for: queryString)
+       fetchResults(for: txtField.text)
     }
     
     // MARK: - Fetch sesults for the query string
     
-    fileprivate func fetchResults(for queryString: String?) {
-        viewModel.fetchResults(queryString) { [weak self] (results, error) in
+    func fetchResults(for queryString: String?) {
+        guard let queryString = queryString, !queryString.isEmpty else {
+            showOkAlert(with: nil, message: "Enter a movie name")
+            return
+        }
+        
+        guard
+            let encodedQueryString = queryString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=1")
+            else {
+                showOkAlert(with: nil, message: "Something went wrong, try something else")
+                return
+        }
+        
+        serviceHandler.fetch(url, completion: { [weak self] (results, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     self?.showOkAlert(with: "Error", message: "Something went wrong")
@@ -86,7 +95,7 @@ class SearchViewController: UIViewController {
                     self?.performSegue(withIdentifier: "DetailDegueID", sender: results)
                 }
             }
-        }
+        })
     }
     
     // MARK: - Show alert

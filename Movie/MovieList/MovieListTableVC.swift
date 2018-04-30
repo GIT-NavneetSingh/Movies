@@ -85,7 +85,7 @@ struct MovieListViewServiceHanlder: NetworkEngine {
                 return
             }
             
-            let results = try? JSONDecoder().decode(Results.self, from: data)
+            let results = try? JSONDecoder().decode(MovieResults.self, from: data)
             completion(results, error)
         }
         

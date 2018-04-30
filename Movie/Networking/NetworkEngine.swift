@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public typealias CompletionBlock = (_ results: Results?, _ error: Error?) -> ()
+public typealias CompletionBlock = (_ results: MovieResults?, _ error: Error?) -> ()
 public typealias DownloadBlock = (_ data: Data?) -> ()
 
 protocol NetworkEngine {

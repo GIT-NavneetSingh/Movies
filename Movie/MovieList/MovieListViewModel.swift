@@ -10,5 +10,5 @@ import Foundation
 
 struct MovieListViewModel {
     let movie: String?
-    let results: Results?
+    let results: MovieResults?
 }

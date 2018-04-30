@@ -35,7 +35,7 @@ class SearchViewController: UIViewController {
         switch segueID {
         case .Detail:
             let destinationVC = segue.destination as? MovieListTableVC
-            destinationVC?.viewModel = MovieListViewModel(movie: searchQuery, results: sender as? Results)
+            destinationVC?.viewModel = MovieListViewModel(movie: searchQuery, results: sender as? MovieResults)
             
             persistSearchQuery(searchQuery)
             
@@ -148,7 +148,7 @@ extension SearchViewController: UIPopoverPresentationControllerDelegate {
 extension SearchViewController: RecentSearchProtocol {
 
     func controller(_ controller: RecentSearchTableVC, didSelectItem item: String?) {
-        controller.dismiss(animated: true) {
+        controller.dismiss(animated: false) {
             self.fetchResults(for: item)
         }
     }
@@ -163,7 +163,7 @@ struct SearchServiceHandler: NetworkEngine {
                 return
             }
             
-            let results = try? JSONDecoder().decode(Results.self, from: data)
+            let results = try? JSONDecoder().decode(MovieResults.self, from: data)
             completion(results, error)
         }
         

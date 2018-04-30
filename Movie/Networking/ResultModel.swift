@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public struct Results: Codable {
+struct MovieResults: Codable {
     let page: Int
     let totalPages: Int
     let totalResults: Int

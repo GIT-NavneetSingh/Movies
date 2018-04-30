@@ -14,7 +14,6 @@ class SearchResultsVC: UITableViewController {
     
     private var currentPage: Int = 1
     private var isLoading = false
-    private var cache = NSCache<AnyObject, AnyObject>()
 
     lazy var serviceController: MoviesFetchable = ServiceController()
 
@@ -38,7 +37,7 @@ class SearchResultsVC: UITableViewController {
 
         // Configure the cell...
         if let cell = cell as? SearchResultsTableViewCell {
-            cell.viewModel = SearchResultCellViewModel(movie: viewModel?.movies?[indexPath.section], cache: cache)
+            cell.viewModel = SearchResultCellViewModel(movie: viewModel?.movies?[indexPath.section], cache: viewModel?.cache)
             cell.configureView()
         }
         

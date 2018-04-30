@@ -9,8 +9,10 @@
 import Foundation
 import UIKit
 
+// MARK: - View model for SearchResultsVC'table cell
+
 struct SearchResultCellViewModel {
-    let cache: NSCache<AnyObject, AnyObject>
+    let imageCache: NSCache<NSString, UIImage>?
     let title: String?
     let releaseDate: String?
     let overview: String?
@@ -18,15 +20,16 @@ struct SearchResultCellViewModel {
     let defaultImage = #imageLiteral(resourceName: "default_image")
     var image: UIImage? = nil
 
-    init(movie: Movie?, cache: NSCache<AnyObject, AnyObject>) {
+    init(movie: Movie?, cache: NSCache<NSString, UIImage>?) {
         title = movie?.title
         releaseDate = movie?.releaseDate
         overview = movie?.overview
         posterPath = movie?.posterPath
-        self.cache = cache
+        imageCache = cache
 
-        if let cachedData = cache.object(forKey: posterPath as AnyObject) as? Data {
-            image = UIImage(data: cachedData)
+        if let path = posterPath as NSString?,
+            let cachedImage = imageCache?.object(forKey: path) {
+            image = cachedImage
         }
     }
     
@@ -37,6 +40,6 @@ struct SearchResultCellViewModel {
         }
         
         self.image = image
-        cache.setObject(data as AnyObject, forKey: path as AnyObject)
+        imageCache?.setObject(image, forKey: path as NSString)
     }
 }

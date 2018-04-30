@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - MovieResults, Movie to store results from the network reponse
+
 public struct MovieResults: Codable {
     let page: Int
     let totalPages: Int

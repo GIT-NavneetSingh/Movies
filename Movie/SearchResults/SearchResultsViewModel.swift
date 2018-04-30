@@ -7,12 +7,17 @@
 //
 
 import Foundation
+import UIKit
+
+// MARK: - View model for SearchResultsVC
 
 struct SearchResultsViewModel {
     let movie: String?
     let title: String?
     var movies: [Movie]?
     let totalPages: Int?
+    
+    let cache = NSCache<NSString, UIImage>()
 
     init(movie: String?, results: MovieResults?) {
         self.movie = movie

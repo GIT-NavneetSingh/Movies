@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-public typealias CompletionBlock = ((_ results: MovieResults?, _ error: Error?) -> ())?
-public typealias DownloadBlock = ((_ data: Data?) -> ())?
+typealias CompletionBlock = ((_ results: MovieResults?, _ error: Error?) -> ())?
+typealias DownloadBlock = ((_ data: Data?) -> ())?
 
 protocol MoviesFetchable {
     func fetch(for movie: String, page: Int, completion: CompletionBlock)
@@ -20,8 +20,10 @@ protocol DataDownloadable {
     func downloadImage(from path: String, completion: DownloadBlock)
 }
 
+// MARK: - ServiceController to handle netwoking
 struct ServiceController: MoviesFetchable, DataDownloadable {
     
+    // MARK: -
     private enum URLValue {
         case movie(query: String, page: Int)
         case image(path: String)

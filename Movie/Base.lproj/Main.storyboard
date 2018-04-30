@@ -46,12 +46,30 @@
                                     <action selector="searchAction" destination="BYZ-38-t0r" eventType="touchUpInside" id="b15-H9-OXv"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xek-2f-eZv" userLabel="ActivityIndicatorView">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="VGa-p6-fbt">
+                                        <rect key="frame" x="169" y="283.5" width="37" height="37"/>
+                                        <color key="color" red="0.77647058820000003" green="0.047058823530000002" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="VGa-p6-fbt" firstAttribute="centerY" secondItem="Xek-2f-eZv" secondAttribute="centerY" id="6IW-Bq-eUA"/>
+                                    <constraint firstItem="VGa-p6-fbt" firstAttribute="centerX" secondItem="Xek-2f-eZv" secondAttribute="centerX" id="kvT-0N-oez"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Xek-2f-eZv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="0Tb-ML-eFm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Xek-2f-eZv" secondAttribute="trailing" id="6Pe-pl-QcF"/>
+                            <constraint firstItem="Xek-2f-eZv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7hf-NH-waM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rHx-32-BjV" secondAttribute="trailing" constant="16" id="JUm-iC-igz"/>
                             <constraint firstItem="fke-zl-37Y" firstAttribute="top" secondItem="rHx-32-BjV" secondAttribute="bottom" constant="16" id="Q66-tc-1Iu"/>
                             <constraint firstItem="rHx-32-BjV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="Sdh-2d-53f"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Xek-2f-eZv" secondAttribute="bottom" id="Wlr-5R-xHh"/>
                             <constraint firstItem="fke-zl-37Y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bv5-H3-6M3"/>
                             <constraint firstItem="rHx-32-BjV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="cFO-fU-IRP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fke-zl-37Y" secondAttribute="trailing" constant="16" id="d3R-CG-vwM"/>
@@ -64,6 +82,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="VGa-p6-fbt" id="QCX-mm-614"/>
+                        <outlet property="activityIndicatorView" destination="Xek-2f-eZv" id="Owu-Zd-uSg"/>
                         <outlet property="txtField" destination="rHx-32-BjV" id="PSc-Zg-mEc"/>
                         <segue destination="lbp-2f-aJG" kind="show" identifier="DetailDegueID" id="hhK-K1-UZS"/>
                         <segue destination="ang-L6-VRt" kind="popoverPresentation" identifier="PopoverSegueID" popoverAnchorView="rHx-32-BjV" id="WZU-eJ-pMV">

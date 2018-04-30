@@ -11,7 +11,9 @@ import UIKit
 class SearchViewController: UIViewController {
 
     @IBOutlet weak var txtField: UITextField!
-
+    @IBOutlet weak var activityIndicatorView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     private enum SegueID: String {
         case Detail = "DetailDegueID"
         case Popover = "PopoverSegueID"
@@ -61,19 +63,30 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func searchAction() {
-       fetchResults(for: txtField.text)
+        fetchResults(for: txtField.text)
     }
     
     // MARK: - Fetch sesults for the query string
     
     func fetchResults(for queryString: String?) {
+        txtField.resignFirstResponder()
+
         guard let queryString = queryString, !queryString.isEmpty else {
             showOkAlert(with: nil, message: "Enter a movie name")
             return
         }
         
+        activityIndicatorView.isHidden = false
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        
         serviceController.fetch(for: queryString, page: 1) { [weak self] (movieResults, error) in
             DispatchQueue.main.async {
+                
+                self?.activityIndicator.stopAnimating()
+                self?.activityIndicator.isHidden = true
+                self?.activityIndicatorView.isHidden = true
+                
                 if error != nil {
                     self?.showOkAlert(with: "Error", message: "Something went wrong")
                 } else {

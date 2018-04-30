@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, NetworkEngine {
+class SearchViewController: UIViewController {
 
     private enum SegueID: String {
         case Detail = "DetailDegueID"

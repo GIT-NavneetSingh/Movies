@@ -10,7 +10,7 @@ import UIKit
 
 class SearchResultsVC: UITableViewController {
     
-    var viewModel: MovieListViewModel?
+    var viewModel: SearchResultsViewModel?
     
     private var dataSource: [Movie] = []
     private var currentPage: Int = 1
@@ -34,10 +34,10 @@ class SearchResultsVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MovieListTableViewCell.self), for: indexPath) as? MovieListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: SearchResultsTableViewCell.self), for: indexPath) as? SearchResultsTableViewCell
 
         // Configure the cell...
-        cell?.viewModel = MovieListTableCellViewModel(movie: dataSource[indexPath.section], cache: cache)
+        cell?.viewModel = SearchResultCellViewModel(movie: dataSource[indexPath.section], cache: cache)
         cell?.configureView()
         return cell ?? UITableViewCell()
     }
@@ -56,13 +56,13 @@ class SearchResultsVC: UITableViewController {
     
     // MARK: - Fetch results
     
-    func fetchResults(for queryString: String?, page: Int, serviceHandler: NetworkEngine = MovieListViewServiceHanlder()) {
+    func fetchResults(for queryString: String?, page: Int, serviceController: MoviesFetchable = ServiceController()) {
         guard
             let queryString = queryString,
             let encodedQueryString = queryString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
             let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=\(page)") else { return }
         
-        serviceHandler.fetch(url) { [weak self] (results, error) in
+        serviceController.fetch(url) { [weak self] (results, error) in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 guard let movies = results?.movies, !movies.isEmpty else {
@@ -73,22 +73,5 @@ class SearchResultsVC: UITableViewController {
                 self?.tableView.reloadData()
             }
         }
-    }
-}
-
-struct MovieListViewServiceHanlder: NetworkEngine {
-    
-    func fetch(_ url: URL, completion: @escaping CompletionBlock) {
-        let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                completion(nil, error)
-                return
-            }
-            
-            let results = try? JSONDecoder().decode(MovieResults.self, from: data)
-            completion(results, error)
-        }
-        
-        dataTask.resume()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MovieListViewModel.swift
+//  SearchResultsViewModel.swift
 //  Movie
 //
 //  Created by Navneet on 4/25/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MovieListViewModel {
+struct SearchResultsViewModel {
     let movie: String?
     let results: MovieResults?
 }

@@ -1,5 +1,5 @@
 //
-//  MockNetworkEngine.swift
+//  MockServiceController.swift
 //  MovieTests
 //
 //  Created by Navneet on 4/29/18.
@@ -13,7 +13,7 @@ class MockError: Error {
     
 }
 
-class MockSuccessNetworkEngineWithResults: NetworkEngine {
+class MockSuccessMoviesServiceControllerWithResults: MoviesFetchable {
     var isCalled = false
     func fetch(_ url: URL, completion: @escaping CompletionBlock) {
         isCalled = true
@@ -29,7 +29,7 @@ class MockSuccessNetworkEngineWithResults: NetworkEngine {
     }
 }
 
-class MockSuccessNetworkEngineWithEmptyResults: NetworkEngine {
+class MockSuccessMoviesServiceControllerWithEmptyResults: MoviesFetchable {
     var isCalled = false
     func fetch(_ url: URL, completion: @escaping CompletionBlock) {
         isCalled = true
@@ -39,15 +39,10 @@ class MockSuccessNetworkEngineWithEmptyResults: NetworkEngine {
     }
 }
 
-class MockFailureNetworkEngine: NetworkEngine {
+class MockFailureMoviesServiceController: MoviesFetchable {
     var isCalled = false
     func fetch(_ url: URL, completion: @escaping CompletionBlock) {
         isCalled = true
         completion(nil, MockError())
-    }
-    
-    func download(_ url: URL, completion: @escaping DownloadBlock) {
-        isCalled = true
-        completion(nil)
     }
 }

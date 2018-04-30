@@ -47,7 +47,7 @@ class SearchViewControllerSpecs: QuickSpec {
                 
                 it("should present list", closure: {
                     controller.didTouchDownTextField(UITextField())
-                    expect(controller.presentedViewController is RecentSearchTableVC).toEventually(beTruthy())
+                    expect(controller.presentedViewController is RecentSearchVC).toEventually(beTruthy())
                 })
             })
             
@@ -62,43 +62,43 @@ class SearchViewControllerSpecs: QuickSpec {
                 
                 it("should not present list", closure: {
                     controller.didTouchDownTextField(UITextField())
-                    expect(controller.presentedViewController is RecentSearchTableVC).toEventuallyNot(beTruthy())
+                    expect(controller.presentedViewController is RecentSearchVC).toEventuallyNot(beTruthy())
                 })
             })
         }
         
         describe("Verify fetch results") {
             context("when query string is empty", closure: {
-                let serviceHandler = MockSuccessNetworkEngineWithResults()
+                let serviceHandler = MockSuccessMoviesServiceControllerWithResults()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: nil, serviceHandler: serviceHandler)
+                    controller.fetchResults(for: nil, serviceController: serviceHandler)
                     expect(serviceHandler.isCalled).notTo(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })
             })
             
             context("when textfield is not empty and results are there", closure: {
-                let serviceHandler = MockSuccessNetworkEngineWithResults()
+                let serviceHandler = MockSuccessMoviesServiceControllerWithResults()
                 it("should push list VC", closure: {
-                    controller.fetchResults(for: "Batman", serviceHandler: serviceHandler)
+                    controller.fetchResults(for: "Batman", serviceController: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
-                    expect(controller.navigationController?.topViewController is MovieListTableVC).toEventually(beTruthy())
+                    expect(controller.navigationController?.topViewController is SearchResultsVC).toEventually(beTruthy())
                 })
             })
             
             context("when textfield is not empty and results are empty", closure: {
-                let serviceHandler = MockSuccessNetworkEngineWithEmptyResults()
+                let serviceHandler = MockSuccessMoviesServiceControllerWithEmptyResults()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: "Batman", serviceHandler: serviceHandler)
+                    controller.fetchResults(for: "Batman", serviceController: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })
             })
             
             context("when textfield is not empty and there is an error", closure: {
-                let serviceHandler = MockFailureNetworkEngine()
+                let serviceHandler = MockFailureMoviesServiceController()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: "Batman", serviceHandler: serviceHandler)
+                    controller.fetchResults(for: "Batman", serviceController: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })

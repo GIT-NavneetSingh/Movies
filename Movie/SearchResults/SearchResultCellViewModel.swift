@@ -1,5 +1,5 @@
 //
-//  MovieListTableCellViewModel.swift
+//  SearchResultCellViewModel.swift
 //  Movie
 //
 //  Created by Navneet on 4/28/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MovieListTableCellViewModel {
+struct SearchResultCellViewModel {
     let movie: Movie?
     let cache: NSCache<AnyObject, AnyObject>
 }

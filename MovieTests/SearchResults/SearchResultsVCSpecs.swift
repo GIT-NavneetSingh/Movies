@@ -1,5 +1,5 @@
 //
-//  MovieListTableVCSpecs.swift
+//  SearchResultsVCSpecs.swift
 //  MovieTests
 //
 //  Created by Navneet on 4/29/18.
@@ -11,7 +11,7 @@ import Quick
 import Nimble
 @testable import Movie
 
-class MovieListTableVCSpecs: QuickSpec {
+class SearchResultsVCSpecs: QuickSpec {
     
     override func spec() {
        
@@ -23,7 +23,7 @@ class MovieListTableVCSpecs: QuickSpec {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             controller = storyboard.instantiateViewController(withIdentifier: String(describing: SearchResultsVC.self)) as! SearchResultsVC
             
-            controller.viewModel = MovieListViewModel(movie: "Batman", results: results)
+            controller.viewModel = SearchResultsViewModel(movie: "Batman", results: results)
             _ = controller.view
         }
         
@@ -45,33 +45,33 @@ class MovieListTableVCSpecs: QuickSpec {
         
         describe("Verify fetch results") {
             context("when query string is empty", closure: {
-                let serviceHandler = MockFailureNetworkEngine()
+                let serviceHandler = MockFailureMoviesServiceController()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: nil, page: 2, serviceHandler: serviceHandler)
+                    controller.fetchResults(for: nil, page: 2, serviceController: serviceHandler)
                     expect(serviceHandler.isCalled).notTo(beTruthy())
                 })
             })
             
             context("when textfield is not empty and results are there", closure: {
-                let serviceHandler = MockSuccessNetworkEngineWithResults()
+                let serviceHandler = MockSuccessMoviesServiceControllerWithResults()
                 it("should push list VC", closure: {
-                    controller.fetchResults(for: "Batman", page: 2, serviceHandler: serviceHandler)
+                    controller.fetchResults(for: "Batman", page: 2, serviceController: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
                 })
             })
             
             context("when textfield is not empty and results are empty", closure: {
-                let serviceHandler = MockSuccessNetworkEngineWithEmptyResults()
+                let serviceHandler = MockSuccessMoviesServiceControllerWithEmptyResults()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: "Batman", page: 2, serviceHandler: serviceHandler)
+                    controller.fetchResults(for: "Batman", page: 2, serviceController: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
                 })
             })
             
             context("when textfield is not empty and there is an error", closure: {
-                let serviceHandler = MockFailureNetworkEngine()
+                let serviceHandler = MockFailureMoviesServiceController()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: "Batman", page: 2, serviceHandler: serviceHandler)
+                    controller.fetchResults(for: "Batman", page: 2, serviceController: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
                 })
             })

@@ -78,7 +78,7 @@
         <!--Recent SearchVC-->
         <scene sceneID="Vkh-yA-Ii0">
             <objects>
-                <tableViewController storyboardIdentifier="RecentSearchTableVC" id="ang-L6-VRt" customClass="RecentSearchVC" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RecentSearchVC" id="ang-L6-VRt" customClass="RecentSearchVC" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="yUk-Vs-cgW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -106,13 +106,13 @@
         <!--Search ResultsVC-->
         <scene sceneID="0hV-dd-eHu">
             <objects>
-                <tableViewController storyboardIdentifier="MovieListTableVC" id="lbp-2f-aJG" customClass="SearchResultsVC" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchResultsVC" id="lbp-2f-aJG" customClass="SearchResultsVC" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="3I0-AC-2Ro">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieListTableViewCell" rowHeight="211" id="8to-tl-hyu" customClass="MovieListTableViewCell" customModule="Movie" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchResultsTableViewCell" rowHeight="211" id="8to-tl-hyu" customClass="SearchResultsTableViewCell" customModule="Movie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="211"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8to-tl-hyu" id="xKe-qN-O2D">

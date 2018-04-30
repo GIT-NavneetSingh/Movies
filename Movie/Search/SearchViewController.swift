@@ -35,7 +35,7 @@ class SearchViewController: UIViewController {
         switch segueID {
         case .Detail:
             let destinationVC = segue.destination as? SearchResultsVC
-            destinationVC?.viewModel = MovieListViewModel(movie: searchQuery, results: sender as? MovieResults)
+            destinationVC?.viewModel = SearchResultsViewModel(movie: searchQuery, results: sender as? MovieResults)
             
             persistSearchQuery(searchQuery)
             
@@ -65,7 +65,7 @@ class SearchViewController: UIViewController {
     
     // MARK: - Fetch sesults for the query string
     
-    func fetchResults(for queryString: String?, serviceHandler: NetworkEngine = SearchServiceHandler()) {
+    func fetchResults(for queryString: String?, serviceController: MoviesFetchable = ServiceController()) {
         guard let queryString = queryString, !queryString.isEmpty else {
             showOkAlert(with: nil, message: "Enter a movie name")
             return
@@ -79,7 +79,7 @@ class SearchViewController: UIViewController {
                 return
         }
         
-        serviceHandler.fetch(url, completion: { [weak self] (results, error) in
+        serviceController.fetch(url, completion: { [weak self] (results, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     self?.showOkAlert(with: "Error", message: "Something went wrong")
@@ -151,22 +151,5 @@ extension SearchViewController: RecentSearchProtocol {
         controller.dismiss(animated: false) {
             self.fetchResults(for: item)
         }
-    }
-}
-
-struct SearchServiceHandler: NetworkEngine {
-    
-    func fetch(_ url: URL, completion: @escaping CompletionBlock) {
-        let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                completion(nil, error)
-                return
-            }
-            
-            let results = try? JSONDecoder().decode(MovieResults.self, from: data)
-            completion(results, error)
-        }
-        
-        dataTask.resume()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MovieListTableViewCell.swift
+//  SearchResultsTableViewCell.swift
 //  Movie
 //
 //  Created by Navneet on 4/25/18.
@@ -10,7 +10,7 @@ import UIKit
 
 public typealias DownloadBlocks = (_ data: NSData?) -> ()
 
-class MovieListTableViewCell: UITableViewCell {
+class SearchResultsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
@@ -18,7 +18,7 @@ class MovieListTableViewCell: UITableViewCell {
     @IBOutlet weak var posterImgView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var viewModel: MovieListTableCellViewModel?
+    var viewModel: SearchResultCellViewModel?
     
     func configureView() {
         titleLabel.text = viewModel?.movie?.title
@@ -41,7 +41,7 @@ class MovieListTableViewCell: UITableViewCell {
         }
     }
     
-    func fetchImage(from path: String?, serviceHandler: NetworkEngine = DownloadServiceHandler()) {
+    func fetchImage(from path: String?, serviceController: DataDownloadable = ServiceController()) {
         guard
             let path = path,
             let encodedPath = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
@@ -49,7 +49,7 @@ class MovieListTableViewCell: UITableViewCell {
                 return
         }
         
-        serviceHandler.download(url) { [weak self] data in
+        serviceController.download(url) { [weak self] data in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 self?.activityIndicator.isHidden = true
@@ -65,21 +65,5 @@ class MovieListTableViewCell: UITableViewCell {
         overviewLabel.text = nil
         posterImgView.image = nil
         activityIndicator.isHidden = true
-    }
-}
-
-struct DownloadServiceHandler : NetworkEngine {
-    
-    func download(_ url: URL, completion: @escaping DownloadBlock) {
-        let downloadTask = URLSession.shared.downloadTask(with: url) { (tempURL, response, error) in
-            guard let url = tempURL else {
-                completion(nil)
-                return
-            }
-            
-            completion(try? Data(contentsOf: url))
-        }
-        
-        downloadTask.resume()
     }
 }

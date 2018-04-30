@@ -15,16 +15,32 @@ class MovieListTableViewCellSpecs: QuickSpec {
     
     override func spec() {
         
-        var cell: MovieListTableViewCell!
+        class MockSuccessServiceController: DataDownloadable {
+            var isCalled = false
+            func download(_ url: URL, completion: @escaping DownloadBlock) {
+                isCalled = true
+                completion(Data())
+            }
+        }
+    
+        class MockFailureServiceController: DataDownloadable {
+            var isCalled = false
+            func download(_ url: URL, completion: @escaping DownloadBlock) {
+                isCalled = true
+                completion(nil)
+            }
+        }
+        
+        var cell: SearchResultsTableViewCell!
         let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
         let cache = NSCache<AnyObject, AnyObject>()
-        let viewModel = MovieListTableCellViewModel(movie: movie, cache: cache)
+        let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
         
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SearchResultsVC.self)) as! SearchResultsVC
             
-            cell = controller.tableView.dequeueReusableCell(withIdentifier: String(describing: MovieListTableViewCell.self)) as! MovieListTableViewCell
+            cell = controller.tableView.dequeueReusableCell(withIdentifier: String(describing: SearchResultsTableViewCell.self)) as! SearchResultsTableViewCell
         }
         
         describe("Verify cell state") {
@@ -54,25 +70,25 @@ class MovieListTableViewCellSpecs: QuickSpec {
                 }
                 
                 context("when poster path empty", closure: {
-                    let serviceHandler = MockFailureNetworkEngine()
+                    let serviceHandler = MockFailureServiceController()
                     it("should present an alert", closure: {
-                        cell.fetchImage(from: nil, serviceHandler: serviceHandler)
+                        cell.fetchImage(from: nil, serviceController: serviceHandler)
                         expect(serviceHandler.isCalled).notTo(beTruthy())
                     })
                 })
                 
                 context("when poster path is not empty and receives response", closure: {
-                    let serviceHandler = MockSuccessNetworkEngineWithResults()
+                    let serviceHandler = MockSuccessServiceController()
                     it("should push list VC", closure: {
-                        cell.fetchImage(from: movie.posterPath, serviceHandler: serviceHandler)
+                        cell.fetchImage(from: movie.posterPath, serviceController: serviceHandler)
                         expect(serviceHandler.isCalled).to(beTruthy())
                     })
                 })
                 
                 context("when poster path is not empty and receives error", closure: {
-                    let serviceHandler = MockFailureNetworkEngine()
+                    let serviceHandler = MockFailureServiceController()
                     it("should present an alert", closure: {
-                        cell.fetchImage(from: movie.posterPath, serviceHandler: serviceHandler)
+                        cell.fetchImage(from: movie.posterPath, serviceController: serviceHandler)
                         expect(serviceHandler.isCalled).to(beTruthy())
                     })
                 })

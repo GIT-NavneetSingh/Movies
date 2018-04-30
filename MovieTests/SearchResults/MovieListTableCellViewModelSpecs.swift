@@ -15,11 +15,11 @@ class MovieListTableCellViewModelSpecs: QuickSpec {
     
     override func spec() {
         
-        var viewModel: MovieListTableCellViewModel!
+        var viewModel: SearchResultCellViewModel!
         let movie = Movie(title: "Batman", overview: "Sample", releaseDate: "2012-05-01", posterPath: "somevalue")
 
         beforeEach {
-            viewModel = MovieListTableCellViewModel(movie: movie, cache: NSCache<AnyObject, AnyObject>())
+            viewModel = SearchResultCellViewModel(movie: movie, cache: NSCache<AnyObject, AnyObject>())
         }
         
         describe("Verify state of view model") {

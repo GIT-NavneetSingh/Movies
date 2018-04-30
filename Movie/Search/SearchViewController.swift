@@ -149,6 +149,7 @@ extension SearchViewController: RecentSearchProtocol {
 
     func controller(_ controller: RecentSearchVC, didSelectItem item: String?) {
         controller.dismiss(animated: false) {
+            self.txtField.text = item
             self.fetchResults(for: item)
         }
     }

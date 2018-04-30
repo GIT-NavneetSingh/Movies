@@ -105,7 +105,7 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		531B5CBE2095CF1600193FCE /* MovieList */ = {
+		531B5CBE2095CF1600193FCE /* SearchResults */ = {
 			isa = PBXGroup;
 			children = (
 				53F1A67D20906D7900E1E46D /* MovieListViewModel.swift */,
@@ -113,7 +113,7 @@
 				5305E5862094A17200B6C1E6 /* MovieListTableCellViewModel.swift */,
 				53F1A67B20906BF100E1E46D /* MovieListTableViewCell.swift */,
 			);
-			path = MovieList;
+			path = SearchResults;
 			sourceTree = "<group>";
 		};
 		531B5CBF2095CF4300193FCE /* RecentSearch */ = {
@@ -157,7 +157,7 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		531B5CCA209650C700193FCE /* MovieList */ = {
+		531B5CCA209650C700193FCE /* SearchResults */ = {
 			isa = PBXGroup;
 			children = (
 				531B5CCD2096582F00193FCE /* MovieListViewModelSpecs.swift */,
@@ -165,7 +165,7 @@
 				531B5CCF2096D47700193FCE /* MovieListTableCellViewModelSpecs.swift */,
 				531B5CD52097016F00193FCE /* MovieListTableViewCellSpecs.swift */,
 			);
-			path = MovieList;
+			path = SearchResults;
 			sourceTree = "<group>";
 		};
 		531B5CD72097379B00193FCE /* Model */ = {
@@ -204,7 +204,7 @@
 				5347989320905F16004F1F43 /* Info.plist */,
 				5347989020905F16004F1F43 /* LaunchScreen.storyboard */,
 				5347988820905F14004F1F43 /* Main.storyboard */,
-				531B5CBE2095CF1600193FCE /* MovieList */,
+				531B5CBE2095CF1600193FCE /* SearchResults */,
 				531B5CBD2095CF0300193FCE /* Networking */,
 				531B5CBF2095CF4300193FCE /* RecentSearch */,
 				531B5CC02095CF4F00193FCE /* Search */,
@@ -217,7 +217,7 @@
 			children = (
 				5347989E20905F16004F1F43 /* Info.plist */,
 				5347989C20905F16004F1F43 /* MovieTests.swift */,
-				531B5CCA209650C700193FCE /* MovieList */,
+				531B5CCA209650C700193FCE /* SearchResults */,
 				531B5CC92096506600193FCE /* Networking */,
 				531B5CC82096505800193FCE /* RecentSearch */,
 				531B5CC72096504800193FCE /* Search */,

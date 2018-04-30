@@ -27,7 +27,7 @@ class MovieListViewModelSpecs: QuickSpec {
             context("when initialised", closure: {
                 it("should have requied attributes", closure: {
                     expect(viewModel.movie) == movie.title
-                    expect(viewModel.results?.movies.count) === results.movies.count
+                    expect(viewModel.movies?.count) === results.movies.count
                 })
             })
         }

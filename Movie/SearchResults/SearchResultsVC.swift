@@ -12,7 +12,7 @@ class SearchResultsVC: UITableViewController {
     
     var viewModel: SearchResultsViewModel?
     
-    private var dataSource: [Movie] = []
+    private var movies: [Movie] = []
     private var currentPage: Int = 1
     private var isLoading = false
     private var cache = NSCache<AnyObject, AnyObject>()
@@ -20,13 +20,13 @@ class SearchResultsVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = viewModel?.movie?.uppercased()
-        dataSource = viewModel?.results?.movies ?? []
+        title = viewModel?.title
+        movies = viewModel?.movies ?? []
     }
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSource.count
+        return movies.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,14 +37,14 @@ class SearchResultsVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: SearchResultsTableViewCell.self), for: indexPath) as? SearchResultsTableViewCell
 
         // Configure the cell...
-        cell?.viewModel = SearchResultCellViewModel(movie: dataSource[indexPath.section], cache: cache)
+        cell?.viewModel = SearchResultCellViewModel(movie: movies[indexPath.section], cache: cache)
         cell?.configureView()
         return cell ?? UITableViewCell()
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard indexPath.section == dataSource.count - 1,
-            currentPage < (viewModel?.results?.totalPages ?? 0),
+        guard indexPath.section == movies.count - 1,
+            currentPage < (viewModel?.totalPages ?? 0),
             !isLoading
             else { return }
         
@@ -69,7 +69,7 @@ class SearchResultsVC: UITableViewController {
                     self?.currentPage -= 1
                     return
                 }
-                self?.dataSource.append(contentsOf: movies)
+                self?.movies.append(contentsOf: movies)
                 self?.tableView.reloadData()
             }
         }

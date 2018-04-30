@@ -10,5 +10,14 @@ import Foundation
 
 struct SearchResultsViewModel {
     let movie: String?
-    let results: MovieResults?
+    let title: String?
+    let movies: [Movie]?
+    let totalPages: Int?
+
+    init(movie: String?, results: MovieResults?) {
+        self.movie = movie
+        title = movie?.uppercased()
+        movies = results?.movies
+        totalPages = results?.totalPages
+    }
 }

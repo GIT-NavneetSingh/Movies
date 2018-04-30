@@ -8,14 +8,25 @@
 
 import Foundation
 
-struct MovieListViewModel: NetworkEngine {
- 
+struct MovieListViewServiceHanlder: NetworkEngine {
+    
+    func fetch(_ url: URL, completion: @escaping CompletionBlock) {
+        
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                completion(nil, error)
+                return
+            }
+            
+            let results = try? JSONDecoder().decode(Results.self, from: data)
+            completion(results, error)
+        }
+        
+        dataTask.resume()
+    }
+}
+
+struct MovieListViewModel {
     let movie: String?
     let results: Results?
-    
-    func loadPage(_ page: Int, completion: @escaping CompletionBlock) {
-        guard let encodedQueryString = movie?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=\(page)") else { return }
-        fetch(url, completion: completion)
-    }
 }

@@ -42,5 +42,39 @@ class MovieListTableVCSpecs: QuickSpec {
                 })
             })
         }
+        
+        describe("Verify fetch results") {
+            context("when query string is empty", closure: {
+                let serviceHandler = MockFailureNetworkEngine()
+                it("should present an alert", closure: {
+                    controller.fetchResults(for: nil, page: 2, serviceHandler: serviceHandler)
+                    expect(serviceHandler.isCalled).notTo(beTruthy())
+                })
+            })
+            
+            context("when textfield is not empty and results are there", closure: {
+                let serviceHandler = MockSuccessNetworkEngineWithResults()
+                it("should push list VC", closure: {
+                    controller.fetchResults(for: "Batman", page: 2, serviceHandler: serviceHandler)
+                    expect(serviceHandler.isCalled).to(beTruthy())
+                })
+            })
+            
+            context("when textfield is not empty and results are empty", closure: {
+                let serviceHandler = MockSuccessNetworkEngineWithEmptyResults()
+                it("should present an alert", closure: {
+                    controller.fetchResults(for: "Batman", page: 2, serviceHandler: serviceHandler)
+                    expect(serviceHandler.isCalled).to(beTruthy())
+                })
+            })
+            
+            context("when textfield is not empty and there is an error", closure: {
+                let serviceHandler = MockFailureNetworkEngine()
+                it("should present an alert", closure: {
+                    controller.fetchResults(for: "Batman", page: 2, serviceHandler: serviceHandler)
+                    expect(serviceHandler.isCalled).to(beTruthy())
+                })
+            })
+        }
     }
 }

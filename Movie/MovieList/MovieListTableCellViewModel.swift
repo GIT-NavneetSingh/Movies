@@ -9,6 +9,10 @@
 import Foundation
 
 struct MovieListTableCellViewModel: NetworkEngine {
+    func fetch(_ url: URL, completion: @escaping CompletionBlock) {
+        
+    }
+    
     
     let movie: Movie
     let cache: NSCache<AnyObject, AnyObject>

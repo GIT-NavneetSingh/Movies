@@ -71,8 +71,8 @@ class SearchViewControllerSpecs: QuickSpec {
             context("when query string is empty", closure: {
                 let serviceHandler = MockSuccessNetworkEngineWithResults()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: nil)
-                    expect(serviceHandler.isCalled).to(beTruthy())
+                    controller.fetchResults(for: nil, serviceHandler: serviceHandler)
+                    expect(serviceHandler.isCalled).notTo(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })
             })
@@ -80,7 +80,7 @@ class SearchViewControllerSpecs: QuickSpec {
             context("when textfield is not empty and results are there", closure: {
                 let serviceHandler = MockSuccessNetworkEngineWithResults()
                 it("should push list VC", closure: {
-                    controller.fetchResults(for: "Batman")
+                    controller.fetchResults(for: "Batman", serviceHandler: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.navigationController?.topViewController is MovieListTableVC).toEventually(beTruthy())
                 })
@@ -89,7 +89,7 @@ class SearchViewControllerSpecs: QuickSpec {
             context("when textfield is not empty and results are empty", closure: {
                 let serviceHandler = MockSuccessNetworkEngineWithEmptyResults()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: "Batman", service: MockSuccessNetworkEngineWithEmptyResults())
+                    controller.fetchResults(for: "Batman", serviceHandler: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })
@@ -98,7 +98,7 @@ class SearchViewControllerSpecs: QuickSpec {
             context("when textfield is not empty and there is an error", closure: {
                 let serviceHandler = MockFailureNetworkEngine()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: "Batman", service: MockFailureNetworkEngine())
+                    controller.fetchResults(for: "Batman", serviceHandler: serviceHandler)
                     expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })

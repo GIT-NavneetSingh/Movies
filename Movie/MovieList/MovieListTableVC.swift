@@ -41,21 +41,7 @@ class MovieListTableVC: UITableViewController {
         cell?.configureView()
         return cell ?? UITableViewCell()
     }
-    
-    fileprivate func fetchResults() {
-        viewModel?.loadPage(currentPage, completion: { [weak self] (results, error) in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                guard let movies = results?.movies, !movies.isEmpty else {
-                    self?.currentPage -= 1
-                    return
-                }
-                self?.dataSource.append(contentsOf: movies)
-                self?.tableView.reloadData()
-            }
-        })
-    }
-    
+
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard indexPath.section == dataSource.count - 1,
             currentPage < (viewModel?.results?.totalPages ?? 0),
@@ -65,6 +51,27 @@ class MovieListTableVC: UITableViewController {
         currentPage += 1
         isLoading = true
         
-        fetchResults()
+        fetchResults(for: viewModel?.movie, page: currentPage)
+    }
+    
+    // MARK: - Fetch results
+    
+    func fetchResults(for queryString: String?, page: Int, serviceHandler: NetworkEngine = MovieListViewServiceHanlder()) {
+        guard
+            let queryString = queryString,
+            let encodedQueryString = queryString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=\(page)") else { return }
+        
+        serviceHandler.fetch(url) { [weak self] (results, error) in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                guard let movies = results?.movies, !movies.isEmpty else {
+                    self?.currentPage -= 1
+                    return
+                }
+                self?.dataSource.append(contentsOf: movies)
+                self?.tableView.reloadData()
+            }
+        }
     }
 }

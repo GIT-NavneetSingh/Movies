@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct SearchResultCellViewModel {
     let cache: NSCache<AnyObject, AnyObject>
@@ -14,13 +15,28 @@ struct SearchResultCellViewModel {
     let releaseDate: String?
     let overview: String?
     let posterPath: String?
-    
-    init(movie: Movie, cache: NSCache<AnyObject, AnyObject>) {
-        title = movie.title
-        releaseDate = movie.releaseDate
-        overview = movie.overview
-        posterPath = movie.posterPath
-        self.cache = cache
-    }
+    let defaultImage = #imageLiteral(resourceName: "default_image")
+    var image: UIImage? = nil
 
+    init(movie: Movie?, cache: NSCache<AnyObject, AnyObject>) {
+        title = movie?.title
+        releaseDate = movie?.releaseDate
+        overview = movie?.overview
+        posterPath = movie?.posterPath
+        self.cache = cache
+
+        if let cachedData = cache.object(forKey: posterPath as AnyObject) as? Data {
+            image = UIImage(data: cachedData)
+        }
+    }
+    
+    mutating func parseImageData(_ data: Data?) {
+        guard let data = data, let image = UIImage(data: data), let path = posterPath else {
+            self.image = #imageLiteral(resourceName: "default_image")
+            return
+        }
+        
+        self.image = image
+        cache.setObject(data as AnyObject, forKey: path as AnyObject)
+    }
 }

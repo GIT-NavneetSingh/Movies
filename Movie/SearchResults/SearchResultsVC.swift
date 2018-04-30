@@ -12,7 +12,6 @@ class SearchResultsVC: UITableViewController {
     
     var viewModel: SearchResultsViewModel?
     
-    private var movies: [Movie] = []
     private var currentPage: Int = 1
     private var isLoading = false
     private var cache = NSCache<AnyObject, AnyObject>()
@@ -23,12 +22,11 @@ class SearchResultsVC: UITableViewController {
         super.viewDidLoad()
         
         title = viewModel?.title
-        movies = viewModel?.movies ?? []
     }
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return movies.count
+        return viewModel?.movies?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,7 +38,7 @@ class SearchResultsVC: UITableViewController {
 
         // Configure the cell...
         if let cell = cell as? SearchResultsTableViewCell {
-            cell.viewModel = SearchResultCellViewModel(movie: movies[indexPath.section], cache: cache)
+            cell.viewModel = SearchResultCellViewModel(movie: viewModel?.movies?[indexPath.section], cache: cache)
             cell.configureView()
         }
         
@@ -48,7 +46,8 @@ class SearchResultsVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard indexPath.section == movies.count - 1,
+        guard
+            indexPath.section == (viewModel?.movies?.count ?? 0) - 1,
             currentPage < (viewModel?.totalPages ?? 0),
             !isLoading
             else { return }

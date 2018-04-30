@@ -24,38 +24,32 @@ class SearchResultsTableViewCell: UITableViewCell {
         releaseDateLabel.text = viewModel?.releaseDate
         overviewLabel.text = viewModel?.overview
         
-        setImage()
-    }
-    
-    private func setImage() {
-        guard let path = viewModel?.posterPath else {
-            posterImgView.image = #imageLiteral(resourceName: "default_image")
+        guard let image = viewModel?.image else {
+            fetchImage(from: viewModel?.posterPath)
             return
         }
         
-        if let cachedData = viewModel?.cache.object(forKey: path as AnyObject) as? Data {
-            activityIndicator.isHidden = true
-            posterImgView.image = UIImage(data: cachedData)
-        } else {
-            activityIndicator.isHidden = false
-            activityIndicator.startAnimating()
-            fetchImage(from: path)
-        }
+        posterImgView.image = image
     }
     
-    private func fetchImage(from path: String) {
+    private func fetchImage(from path: String?) {
+        guard let path = path else {
+            posterImgView.image = viewModel?.defaultImage
+            return
+        }
+        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+
         serviceController.downloadImage(from: path) { [weak self] data in
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
-                
-                guard let data = data, let image = UIImage(data: data) else {
-                    self?.posterImgView.image = #imageLiteral(resourceName: "default_image")
-                    return
+                defer {
+                    self?.activityIndicator.stopAnimating()
+                    self?.activityIndicator.isHidden = true
                 }
                 
-                self?.posterImgView.image = image
-                self?.viewModel?.cache.setObject(data as AnyObject, forKey: path as AnyObject)
+                self?.viewModel?.parseImageData(data)
+                self?.posterImgView.image = self?.viewModel?.image
             }
         }
     }

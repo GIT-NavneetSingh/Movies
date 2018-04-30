@@ -40,7 +40,7 @@ class SearchViewController: UIViewController {
             persistSearchQuery(searchQuery)
             
         case .Popover:
-            let recentSearchVC = segue.destination as? RecentSearchTableVC
+            let recentSearchVC = segue.destination as? RecentSearchVC
             recentSearchVC?.delegate = self
             recentSearchVC?.popoverPresentationController?.delegate = self
             recentSearchVC?.popoverPresentationController?.sourceView = sender as? UIView // button
@@ -147,7 +147,7 @@ extension SearchViewController: UIPopoverPresentationControllerDelegate {
 
 extension SearchViewController: RecentSearchProtocol {
 
-    func controller(_ controller: RecentSearchTableVC, didSelectItem item: String?) {
+    func controller(_ controller: RecentSearchVC, didSelectItem item: String?) {
         controller.dismiss(animated: false) {
             self.fetchResults(for: item)
         }

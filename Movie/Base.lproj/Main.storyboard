@@ -75,10 +75,10 @@
             </objects>
             <point key="canvasLocation" x="655" y="144"/>
         </scene>
-        <!--Recent Search TableVC-->
+        <!--Recent SearchVC-->
         <scene sceneID="Vkh-yA-Ii0">
             <objects>
-                <tableViewController storyboardIdentifier="RecentSearchTableVC" id="ang-L6-VRt" customClass="RecentSearchTableVC" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RecentSearchTableVC" id="ang-L6-VRt" customClass="RecentSearchVC" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="yUk-Vs-cgW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

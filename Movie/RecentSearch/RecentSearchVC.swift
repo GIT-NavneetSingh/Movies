@@ -1,5 +1,5 @@
 //
-//  RecentSearchTableVC.swift
+//  RecentSearchVC.swift
 //  Movie
 //
 //  Created by Navneet on 4/26/18.
@@ -9,10 +9,10 @@
 import UIKit
 
 protocol RecentSearchProtocol {
-    func controller(_ controller: RecentSearchTableVC, didSelectItem item: String?)
+    func controller(_ controller: RecentSearchVC, didSelectItem item: String?)
 }
 
-class RecentSearchTableVC: UITableViewController {
+class RecentSearchVC: UITableViewController {
 
     var delegate: RecentSearchProtocol?
     let viewModel = RecentSearchTableViewModel()

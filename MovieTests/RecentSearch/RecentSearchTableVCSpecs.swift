@@ -14,11 +14,11 @@ import Nimble
 class RecentSearchTableVCSpecs: QuickSpec {
     
     override func spec() {
-        var controller: RecentSearchTableVC!
+        var controller: RecentSearchVC!
 
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            controller = storyboard.instantiateViewController(withIdentifier: String(describing: RecentSearchTableVC.self)) as! RecentSearchTableVC
+            controller = storyboard.instantiateViewController(withIdentifier: String(describing: RecentSearchVC.self)) as! RecentSearchVC
         }
         
         describe("Verify controller's state") {

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5305C5002091E68700327E8E /* RecentSearchTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5305C4FF2091E68700327E8E /* RecentSearchTableVC.swift */; };
+		5305C5002091E68700327E8E /* RecentSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5305C4FF2091E68700327E8E /* RecentSearchVC.swift */; };
 		5305E5872094A17200B6C1E6 /* MovieListTableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5305E5862094A17200B6C1E6 /* MovieListTableCellViewModel.swift */; };
 		531B5CC22096063E00193FCE /* SearchViewControllerSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B5CC12096063E00193FCE /* SearchViewControllerSpecs.swift */; };
 		531B5CC420964CC900193FCE /* MockNetworkEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531B5CC320964CC900193FCE /* MockNetworkEngine.swift */; };
@@ -44,7 +44,7 @@
 
 /* Begin PBXFileReference section */
 		1ED4F5BD2E463C7C88D01E46 /* Pods_Movie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5305C4FF2091E68700327E8E /* RecentSearchTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableVC.swift; sourceTree = "<group>"; };
+		5305C4FF2091E68700327E8E /* RecentSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchVC.swift; sourceTree = "<group>"; };
 		5305E5862094A17200B6C1E6 /* MovieListTableCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieListTableCellViewModel.swift; sourceTree = "<group>"; };
 		531B5CC12096063E00193FCE /* SearchViewControllerSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewControllerSpecs.swift; sourceTree = "<group>"; };
 		531B5CC320964CC900193FCE /* MockNetworkEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkEngine.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 		531B5CBF2095CF4300193FCE /* RecentSearch */ = {
 			isa = PBXGroup;
 			children = (
-				5305C4FF2091E68700327E8E /* RecentSearchTableVC.swift */,
+				5305C4FF2091E68700327E8E /* RecentSearchVC.swift */,
 				531B5CD8209737E900193FCE /* RecentSearchTableViewModel.swift */,
 			);
 			path = RecentSearch;
@@ -408,7 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5305C5002091E68700327E8E /* RecentSearchTableVC.swift in Sources */,
+				5305C5002091E68700327E8E /* RecentSearchVC.swift in Sources */,
 				53F1A68020906F8F00E1E46D /* NetworkEngine.swift in Sources */,
 				53F1A6842090976D00E1E46D /* SearchViewController.swift in Sources */,
 				53F1A67A20906BD700E1E46D /* SearchResultsVC.swift in Sources */,

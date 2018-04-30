@@ -17,6 +17,8 @@ class SearchResultsVC: UITableViewController {
     private var isLoading = false
     private var cache = NSCache<AnyObject, AnyObject>()
 
+    lazy var serviceController: MoviesFetchable = ServiceController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,17 +61,17 @@ class SearchResultsVC: UITableViewController {
     
     // MARK: - Fetch results
     
-    func fetchResults(for queryString: String?, page: Int, serviceController: MoviesFetchable = ServiceController()) {
+    private func fetchResults(for queryString: String?, page: Int) {
         guard let queryString = queryString else { return }
-        serviceController.fetch(for: queryString, page: page) { [weak self] (results, error) in
+        serviceController.fetch(for: queryString, page: page) { [weak self] (movieResults, error) in
             DispatchQueue.main.async {
                 self?.isLoading = false
-                guard let movies = results?.movies, !movies.isEmpty else {
+                guard let movies = movieResults?.movies, !movies.isEmpty else {
                     self?.currentPage -= 1
                     return
                 }
                 
-                self?.movies.append(contentsOf: movies)
+                self?.viewModel?.appendMovieResults(movies)
                 self?.tableView.reloadData()
             }
         }

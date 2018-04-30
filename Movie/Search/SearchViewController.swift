@@ -18,7 +18,8 @@ class SearchViewController: UIViewController {
     }
     
     private var searchQuery: String?
-        
+    lazy var serviceController: MoviesFetchable = ServiceController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -59,30 +60,30 @@ class SearchViewController: UIViewController {
         performSegue(withIdentifier: "PopoverSegueID", sender: sender)
     }
     
-    @IBAction func searchAction(_ sender: Any) {
+    @IBAction func searchAction() {
        fetchResults(for: txtField.text)
     }
     
     // MARK: - Fetch sesults for the query string
     
-    func fetchResults(for queryString: String?, serviceController: MoviesFetchable = ServiceController()) {
+    func fetchResults(for queryString: String?) {
         guard let queryString = queryString, !queryString.isEmpty else {
             showOkAlert(with: nil, message: "Enter a movie name")
             return
         }
         
-        serviceController.fetch(for: queryString, page: 1) { [weak self] (results, error) in
+        serviceController.fetch(for: queryString, page: 1) { [weak self] (movieResults, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     self?.showOkAlert(with: "Error", message: "Something went wrong")
                 } else {
-                    guard (results?.movies.count ?? 0) > 0 else {
+                    guard (movieResults?.movies.count ?? 0) > 0 else {
                         self?.showOkAlert(with: nil, message: "Movie not found, try something else")
                         return
                     }
                     
                     self?.searchQuery = queryString
-                    self?.performSegue(withIdentifier: "DetailDegueID", sender: results)
+                    self?.performSegue(withIdentifier: "DetailDegueID", sender: movieResults)
                 }
             }
         }

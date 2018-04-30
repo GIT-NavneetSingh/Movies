@@ -11,7 +11,7 @@ import Foundation
 struct SearchResultsViewModel {
     let movie: String?
     let title: String?
-    let movies: [Movie]?
+    var movies: [Movie]?
     let totalPages: Int?
 
     init(movie: String?, results: MovieResults?) {
@@ -19,5 +19,9 @@ struct SearchResultsViewModel {
         title = movie?.uppercased()
         movies = results?.movies
         totalPages = results?.totalPages
+    }
+    
+    mutating func appendMovieResults(_ newMovies: [Movie]) {
+        movies?.append(contentsOf: newMovies)
     }
 }

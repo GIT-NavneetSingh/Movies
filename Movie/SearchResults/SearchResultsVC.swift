@@ -34,12 +34,15 @@ class SearchResultsVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: SearchResultsTableViewCell.self), for: indexPath) as? SearchResultsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: SearchResultsTableViewCell.self), for: indexPath)
 
         // Configure the cell...
-        cell?.viewModel = SearchResultCellViewModel(movie: movies[indexPath.section], cache: cache)
-        cell?.configureView()
-        return cell ?? UITableViewCell()
+        if let cell = cell as? SearchResultsTableViewCell {
+            cell.viewModel = SearchResultCellViewModel(movie: movies[indexPath.section], cache: cache)
+            cell.configureView()
+        }
+        
+        return cell
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

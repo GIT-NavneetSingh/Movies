@@ -1,5 +1,5 @@
 //
-//  MovieListTableVC.swift
+//  SearchResultsVC.swift
 //  Movie
 //
 //  Created by Navneet on 4/25/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieListTableVC: UITableViewController {
+class SearchResultsVC: UITableViewController {
     
     var viewModel: MovieListViewModel?
     

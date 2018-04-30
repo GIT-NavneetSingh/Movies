@@ -34,7 +34,7 @@ class SearchViewController: UIViewController {
         
         switch segueID {
         case .Detail:
-            let destinationVC = segue.destination as? MovieListTableVC
+            let destinationVC = segue.destination as? SearchResultsVC
             destinationVC?.viewModel = MovieListViewModel(movie: searchQuery, results: sender as? MovieResults)
             
             persistSearchQuery(searchQuery)

@@ -22,7 +22,7 @@ class MovieListTableViewCellSpecs: QuickSpec {
         
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: String(describing: MovieListTableVC.self)) as! MovieListTableVC
+            let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SearchResultsVC.self)) as! SearchResultsVC
             
             cell = controller.tableView.dequeueReusableCell(withIdentifier: String(describing: MovieListTableViewCell.self)) as! MovieListTableViewCell
         }

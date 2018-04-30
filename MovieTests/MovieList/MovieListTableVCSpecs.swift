@@ -15,13 +15,13 @@ class MovieListTableVCSpecs: QuickSpec {
     
     override func spec() {
        
-        var controller: MovieListTableVC!
+        var controller: SearchResultsVC!
         let movie = Movie(title: "Batman", overview: "Sample", releaseDate: "2012-05-01", posterPath: "somevalue")
         let results = MovieResults(page: 1, totalPages: 6, totalResults: 100, movies: [movie])
 
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            controller = storyboard.instantiateViewController(withIdentifier: String(describing: MovieListTableVC.self)) as! MovieListTableVC
+            controller = storyboard.instantiateViewController(withIdentifier: String(describing: SearchResultsVC.self)) as! SearchResultsVC
             
             controller.viewModel = MovieListViewModel(movie: "Batman", results: results)
             _ = controller.view

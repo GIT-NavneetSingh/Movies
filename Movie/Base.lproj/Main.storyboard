@@ -103,10 +103,10 @@
             </objects>
             <point key="canvasLocation" x="655" y="1001"/>
         </scene>
-        <!--Movie List TableVC-->
+        <!--Search ResultsVC-->
         <scene sceneID="0hV-dd-eHu">
             <objects>
-                <tableViewController storyboardIdentifier="MovieListTableVC" id="lbp-2f-aJG" customClass="MovieListTableVC" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MovieListTableVC" id="lbp-2f-aJG" customClass="SearchResultsVC" customModule="Movie" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="3I0-AC-2Ro">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

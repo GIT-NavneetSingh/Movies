@@ -107,7 +107,7 @@ class SearchViewController: UIViewController {
     // MARK: - Persist Searches
     
     fileprivate func persistSearchQuery(_ query: String?) {
-        guard let query = query else { return }
+        guard let query = query?.lowercased() else { return }
         
         let userDefault = UserDefaults.standard
         if var list = userDefault.array(forKey: "RecentSearchedMovies") as? [String] {

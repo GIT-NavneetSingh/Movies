@@ -8,21 +8,14 @@
 
 import Foundation
 
-struct MovieListViewModel {
+struct MovieListViewModel: NetworkEngine {
  
     let movie: String?
     let results: Results?
     
-    init(movie: String?, results: Results?) {
-        self.movie = movie
-        self.results = results
-    }
-    
-    lazy var engine: NetworkEngine = NetworkEngine()
-    
-    mutating func loadPage(_ page: Int, completion: @escaping CompletionBlock) {
+    func loadPage(_ page: Int, completion: @escaping CompletionBlock) {
         guard let encodedQueryString = movie?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
             let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=\(page)") else { return }
-        engine.fetch(url, completion: completion)
+        fetch(url, completion: completion)
     }
 }

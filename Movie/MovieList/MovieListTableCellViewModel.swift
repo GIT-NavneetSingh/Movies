@@ -8,19 +8,12 @@
 
 import Foundation
 
-struct MovieListTableCellViewModel {
+struct MovieListTableCellViewModel: NetworkEngine {
     
     let movie: Movie
     let cache: NSCache<AnyObject, AnyObject>
     
-    init(movie: Movie, cache: NSCache<AnyObject, AnyObject>) {
-        self.movie = movie
-        self.cache = cache
-    }
-    
-    lazy var engine = NetworkEngine()
-
-    mutating func fetchImage(from path: String?, completion: @escaping DownloadBlock) {
+    func fetchImage(from path: String?, completion: @escaping DownloadBlock) {
         guard
             let path = path,
             let url = URL(string: "http://image.tmdb.org/t/p/w92\(path)") else {
@@ -28,6 +21,6 @@ struct MovieListTableCellViewModel {
                 return
         }
         
-        engine.download(url, completion: completion)
+        download(url, completion: completion)
     }
 }

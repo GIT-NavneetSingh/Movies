@@ -8,18 +8,15 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, NetworkEngine {
 
     private enum SegueID: String {
         case Detail = "DetailDegueID"
         case Popover = "PopoverSegueID"
     }
     
-    private var searchQuery = ""
-
-    lazy var engine: NetworkEngine = {
-        return NetworkEngine()
-    }()
+    private var searchQuery: String?
+    let viewModel = SearchViewModel(title: "Search")
     
     @IBOutlet weak var txtField: UITextField!
     
@@ -27,7 +24,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        title = "Search"
+        title = viewModel.title
         txtField.becomeFirstResponder()
     }
     
@@ -75,15 +72,7 @@ class SearchViewController: UIViewController {
     // MARK: - Fetch sesults for the query string
     
     fileprivate func fetchResults(for queryString: String?) {
-        guard
-            let queryString = queryString,
-            let encodedQueryString = queryString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: "http://api.themoviedb.org/3/search/movie?api_key=2696829a81b1b5827d515ff121700838&query=\(encodedQueryString)&page=1")
-            else { return }
-        
-        searchQuery = queryString
-
-        engine.fetch(url) { [weak self] (results, error) in
+        viewModel.fetchResults(queryString) { [weak self] (results, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     self?.showOkAlert(with: "Error", message: "Something went wrong")
@@ -93,6 +82,7 @@ class SearchViewController: UIViewController {
                         return
                     }
                     
+                    self?.searchQuery = queryString
                     self?.performSegue(withIdentifier: "DetailDegueID", sender: results)
                 }
             }
@@ -109,7 +99,9 @@ class SearchViewController: UIViewController {
     
     // MARK: - Persist Searches
     
-    fileprivate func persistSearchQuery(_ query: String) {
+    fileprivate func persistSearchQuery(_ query: String?) {
+        guard let query = query else { return }
+        
         let userDefault = UserDefaults.standard
         if var list = userDefault.array(forKey: "RecentSearchedMovies") as? [String] {
             if let index = list.index(of: query) {

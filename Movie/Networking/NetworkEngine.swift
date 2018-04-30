@@ -12,7 +12,12 @@ import UIKit
 public typealias CompletionBlock = (_ results: Results?, _ error: Error?) -> ()
 public typealias DownloadBlock = (_ data: Data?) -> ()
 
-class NetworkEngine {
+protocol NetworkEngine {
+    func fetch(_ url: URL, completion: @escaping CompletionBlock)
+    func download(_ url: URL, completion: @escaping DownloadBlock)
+}
+
+extension NetworkEngine {
     
     func fetch(_ url: URL, completion: @escaping CompletionBlock) {
         print(url.absoluteString)

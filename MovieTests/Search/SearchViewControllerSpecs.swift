@@ -71,7 +71,7 @@ class SearchViewControllerSpecs: QuickSpec {
             context("when query string is empty", closure: {
                 let serviceHandler = MockSuccessNetworkEngineWithResults()
                 it("should present an alert", closure: {
-                    controller.fetchResults(for: nil, service: serviceHandler)
+                    controller.fetchResults(for: nil)
                     expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.presentedViewController is UIAlertController).toEventually(beTruthy())
                 })
@@ -80,7 +80,7 @@ class SearchViewControllerSpecs: QuickSpec {
             context("when textfield is not empty and results are there", closure: {
                 let serviceHandler = MockSuccessNetworkEngineWithResults()
                 it("should push list VC", closure: {
-                    controller.fetchResults(for: "Batman", service: MockSuccessNetworkEngineWithResults())
+                    controller.fetchResults(for: "Batman")
                     expect(serviceHandler.isCalled).to(beTruthy())
                     expect(controller.navigationController?.topViewController is MovieListTableVC).toEventually(beTruthy())
                 })

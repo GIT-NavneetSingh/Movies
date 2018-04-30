@@ -18,9 +18,7 @@ class SearchViewController: UIViewController {
     }
     
     private var searchQuery: String?
-    
-    lazy var serviceHandler = SearchServiceHandler()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -67,7 +65,7 @@ class SearchViewController: UIViewController {
     
     // MARK: - Fetch sesults for the query string
     
-    func fetchResults(for queryString: String?) {
+    func fetchResults(for queryString: String?, serviceHandler: NetworkEngine = SearchServiceHandler()) {
         guard let queryString = queryString, !queryString.isEmpty else {
             showOkAlert(with: nil, message: "Enter a movie name")
             return

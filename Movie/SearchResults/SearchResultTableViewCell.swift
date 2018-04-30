@@ -8,8 +8,6 @@
 
 import UIKit
 
-public typealias DownloadBlocks = (_ data: NSData?) -> ()
-
 class SearchResultsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -21,15 +19,15 @@ class SearchResultsTableViewCell: UITableViewCell {
     var viewModel: SearchResultCellViewModel?
     
     func configureView() {
-        titleLabel.text = viewModel?.movie?.title
-        releaseDateLabel.text = viewModel?.movie?.releaseDate
-        overviewLabel.text = viewModel?.movie?.overview
+        titleLabel.text = viewModel?.title
+        releaseDateLabel.text = viewModel?.releaseDate
+        overviewLabel.text = viewModel?.overview
         
         setImage()
     }
     
     fileprivate func setImage() {
-        guard let path = viewModel?.movie?.posterPath else { return }
+        guard let path = viewModel?.posterPath else { return }
         
         if let cachedData = viewModel?.cache.object(forKey: path as AnyObject) as? Data {
             activityIndicator.isHidden = true
@@ -53,7 +51,10 @@ class SearchResultsTableViewCell: UITableViewCell {
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 self?.activityIndicator.isHidden = true
-                self?.posterImgView.image = UIImage(data: data as Data? ?? Data())
+                
+                guard let data = data, let image = UIImage(data: data) else { return }
+                
+                self?.posterImgView.image = image
                 self?.viewModel?.cache.setObject(data as AnyObject, forKey: path as AnyObject)
             }
         }

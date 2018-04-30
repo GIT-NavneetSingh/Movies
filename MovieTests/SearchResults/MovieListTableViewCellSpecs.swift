@@ -50,15 +50,15 @@ class MovieListTableViewCellSpecs: QuickSpec {
                 }
                 
                 it("should have title", closure: {
-                    expect(viewModel.movie?.title) == movie.title
+                    expect(viewModel.title) == movie.title
                 })
                 
                 it("should have overview", closure: {
-                    expect(viewModel.movie?.overview) == movie.overview
+                    expect(viewModel.overview) == movie.overview
                 })
                 
                 it("should have release date", closure: {
-                    expect(viewModel.movie?.releaseDate) == movie.releaseDate
+                    expect(viewModel.releaseDate) == movie.releaseDate
                 })
             })
         }

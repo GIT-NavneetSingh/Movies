@@ -60,9 +60,3 @@ struct ServiceController: Fetchable {
         downloadTask.resume()
     }
 }
-
-extension String {
-    var urlEncodedString: String? {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-    }
-}

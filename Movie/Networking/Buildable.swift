@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Buildable {
+protocol Buildable {
     
     /// HTTP Method: GET
     var httpMethod: HTTPMethod { get }
@@ -17,8 +17,7 @@ public protocol Buildable {
     var urlString: String? { get }
 }
 
-public extension Buildable {
-
+extension Buildable {
     var httpTimeout: HTTPTimeout {
         return .fifteen
     }
@@ -29,6 +28,7 @@ extension Buildable {
     func build() -> URLRequest? {
         guard let urlStr = urlString, let url = URL(string: urlStr) else { return nil }
         var request = URLRequest(url: url)
+        request.httpMethod = httpMethod.rawValue
         request.timeoutInterval = TimeInterval(httpTimeout.rawValue)
         return request
     }

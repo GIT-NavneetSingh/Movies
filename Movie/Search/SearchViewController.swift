@@ -15,8 +15,8 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private enum SegueID: String {
-        case Detail = "DetailDegueID"
-        case Popover = "PopoverSegueID"
+        case detail = "DetailSegueID"
+        case popover = "PopoverSegueID"
     }
     
     private enum ErrorMessage: String {
@@ -41,12 +41,12 @@ class SearchViewController: UIViewController {
             let segueID = SegueID(rawValue: identifier) else { return }
         
         switch segueID {
-        case .Detail:
+        case .detail:
             guard let results = sender as? MovieResults else { return }
             let destinationVC = segue.destination as? SearchResultsVC
             destinationVC?.viewModel = SearchResultsTableViewModel(movie: viewModel.searchQuery, results: results)
             
-        case .Popover:
+        case .popover:
             let recentSearchVC = segue.destination as? RecentSearchVC
             recentSearchVC?.delegate = self
             recentSearchVC?.popoverPresentationController?.delegate = self
@@ -62,7 +62,7 @@ class SearchViewController: UIViewController {
             !list.isEmpty
             else { return }
         
-        performSegue(withIdentifier: "PopoverSegueID", sender: sender)
+        performSegue(withIdentifier: SegueID.popover.rawValue, sender: sender)
     }
     
     @IBAction func searchAction() {
@@ -97,7 +97,7 @@ class SearchViewController: UIViewController {
             }
             
             self?.viewModel.persistSearchQuery(queryString)
-            self?.performSegue(withIdentifier: "DetailDegueID", sender: movieResults)
+            self?.performSegue(withIdentifier: SegueID.detail.rawValue, sender: movieResults)
         }
     }
     

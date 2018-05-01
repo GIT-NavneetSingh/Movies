@@ -8,12 +8,12 @@
 
 import Foundation
 
-public enum HTTPMethod: String {
+enum HTTPMethod: String {
     case GET
     case POST
 }
 
-public enum HTTPTimeout: Int {
+enum HTTPTimeout: Int {
     case fifteen = 15
     case thirty = 30
 }

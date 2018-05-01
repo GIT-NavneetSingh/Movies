@@ -11,14 +11,20 @@ import Foundation
 struct PosterImageParams: Buildable {
     let path: String
     
+    private enum PosterImageConstants: String {
+        case baseURL = "http://image.tmdb.org/t/p/w92"
+        
+        var value: String {
+            return rawValue
+        }
+    }
+    
     var urlString: String? {
         guard let encodedPath = path.urlEncodedString else {
             return nil
         }
         
-        let baseURL = "http://image.tmdb.org/t/p/w92"
-        let urlStr = baseURL + "\(encodedPath)"
-        return urlStr
+        return PosterImageConstants.baseURL.value + "\(encodedPath)"
     }
     
     var httpMethod: HTTPMethod {

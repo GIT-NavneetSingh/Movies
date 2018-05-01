@@ -65,6 +65,7 @@ class SearchResultsVC: UITableViewController {
     
     private func fetchResults(for queryString: String?, page: Int) {
         guard let queryString = queryString else { return }
+        
         serviceController.fetch(for: queryString, page: page) { [weak self] (movieResults, error) in
             DispatchQueue.main.async {
                 self?.isLoading = false

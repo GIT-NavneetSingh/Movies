@@ -20,6 +20,8 @@ struct SearchResultCellViewModel {
     let defaultImage = #imageLiteral(resourceName: "default_image")
     var image: UIImage? = nil
 
+    var serviceController: DataDownloadable = ServiceController()
+
     init(movie: Movie?, cache: NSCache<NSString, UIImage>?) {
         title = movie?.title
         releaseDate = movie?.releaseDate
@@ -33,13 +35,23 @@ struct SearchResultCellViewModel {
         }
     }
     
-    mutating func parseImageData(_ data: Data?) {
-        guard let data = data, let image = UIImage(data: data), let path = posterPath else {
-            self.image = #imageLiteral(resourceName: "default_image")
+    func getImage(_ completion: @escaping (_ image: UIImage) -> ()) {
+        guard let path = posterPath else {
+            completion(defaultImage)
             return
         }
-        
-        self.image = image
-        imageCache?.setObject(image, forKey: path as NSString)
+
+        serviceController.downloadImage(from: path) { data in
+            guard let data = data, let image = UIImage(data: data) else {
+                completion(self.defaultImage)
+                return
+            }
+            
+            self.imageCache?.setObject(image, forKey: path as NSString)
+
+            DispatchQueue.main.async {
+                completion(image)
+            }
+        }
     }
 }

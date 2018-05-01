@@ -32,24 +32,21 @@ class SearchResultsTableViewCell: UITableViewCell {
         posterImgView.image = image
     }
     
-    private func fetchImage(from path: String?) {
-        guard let path = path else {
-            posterImgView.image = viewModel?.defaultImage
-            return
+    fileprivate func hideSpinner(_ hide: Bool) {
+        activityIndicator.isHidden = hide
+        if hide {
+            activityIndicator.stopAnimating()
+        } else {
+            activityIndicator.startAnimating()
         }
-        
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-
-        serviceController.downloadImage(from: path) { [weak self] data in
+    }
+    
+    private func fetchImage(from path: String?) {
+        hideSpinner(false)
+        viewModel?.getImage { [weak self] image in
             DispatchQueue.main.async {
-                defer {
-                    self?.activityIndicator.stopAnimating()
-                    self?.activityIndicator.isHidden = true
-                }
-                
-                self?.viewModel?.parseImageData(data)
-                self?.posterImgView.image = self?.viewModel?.image
+                self?.hideSpinner(true)
+                self?.posterImgView.image = image
             }
         }
     }

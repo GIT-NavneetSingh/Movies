@@ -66,14 +66,14 @@ class MovieListTableViewCellSpecs: QuickSpec {
         
         describe("Verify download image") {
             context("when poster path empty", closure: {
+                let serviceController = MockFailureServiceController()
+
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: nil)
                 let cache = NSCache<NSString, UIImage>()
-                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
-                
-                let serviceController = MockFailureServiceController()
+                var viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
+                viewModel.serviceController = serviceController
                 beforeEach {
                     cell.viewModel = viewModel
-                    cell.serviceController = serviceController
                     cell.configureView()
                 }
                 
@@ -83,14 +83,15 @@ class MovieListTableViewCellSpecs: QuickSpec {
             })
             
             context("when poster path is not empty and receives response", closure: {
+                let serviceController = MockSuccessServiceController()
+
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
                 let cache = NSCache<NSString, UIImage>()
-                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
-                
-                let serviceController = MockSuccessServiceController()
+                var viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
+                viewModel.serviceController = serviceController
+
                 beforeEach {
                     cell.viewModel = viewModel
-                    cell.serviceController = serviceController
                     cell.configureView()
                 }
 
@@ -104,14 +105,14 @@ class MovieListTableViewCellSpecs: QuickSpec {
             })
             
             context("when poster path is not empty and receives error", closure: {
+                let serviceController = MockFailureServiceController()
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
                 let cache = NSCache<NSString, UIImage>()
-                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
-                
-                let serviceController = MockFailureServiceController()
+                var viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
+                viewModel.serviceController = serviceController
+
                 beforeEach {
                     cell.viewModel = viewModel
-                    cell.serviceController = serviceController
                     cell.configureView()
                 }
                 

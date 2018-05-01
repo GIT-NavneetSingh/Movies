@@ -11,25 +11,22 @@ import UIKit
 class SearchResultsVC: UITableViewController {
     
     var viewModel: SearchResultsViewModel?
-    
-    private var currentPage: Int = 1
+    private let cache = NSCache<NSString, UIImage>()
     private var isLoading = false
-
     lazy var serviceController: MoviesFetchable = ServiceController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = viewModel?.title
     }
 
     deinit {
-        viewModel?.removeAllCachedImages()
+        cache.removeAllObjects()
     }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel?.movies?.count ?? 0
+        return viewModel?.movies.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,7 +38,7 @@ class SearchResultsVC: UITableViewController {
 
         // Configure the cell...
         if let cell = cell as? SearchResultsTableViewCell {
-            cell.viewModel = SearchResultCellViewModel(movie: viewModel?.movies?[indexPath.section], cache: viewModel?.cache)
+            cell.viewModel = SearchResultCellViewModel(movie: viewModel?.movies[indexPath.section], cache: cache)
             cell.configureView()
         }
         
@@ -50,33 +47,30 @@ class SearchResultsVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard
-            indexPath.section == (viewModel?.movies?.count ?? 0) - 1,
-            currentPage < (viewModel?.totalPages ?? 0),
+            let viewModel = viewModel,
+            indexPath.section == viewModel.movies.count - 1,
+            viewModel.currentPage < viewModel.totalPages,
             !isLoading
             else { return }
         
-        currentPage += 1
-        isLoading = true
-        
-        fetchResults(for: viewModel?.movie, page: currentPage)
+        fetchResults(for: viewModel.movie,
+                     page: viewModel.currentPage + 1,
+                     completion: { [weak self] in
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+        })
     }
     
     // MARK: - Fetch results
     
-    private func fetchResults(for queryString: String?, page: Int) {
-        guard let queryString = queryString else { return }
-        
+    private func fetchResults(for queryString: String?, page: Int, completion: @escaping () -> ()) {
+        guard let queryString = queryString  else { return }
+        isLoading = true
         serviceController.fetch(for: queryString, page: page) { [weak self] (movieResults, error) in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                guard let movies = movieResults?.movies, !movies.isEmpty else {
-                    self?.currentPage -= 1
-                    return
-                }
-                
-                self?.viewModel?.appendMovieResults(movies)
-                self?.tableView.reloadData()
-            }
+            self?.isLoading = false
+            self?.viewModel?.processMovieResults(movieResults)
+            completion()
         }
     }
 }

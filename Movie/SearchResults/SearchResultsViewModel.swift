@@ -14,23 +14,28 @@ import UIKit
 struct SearchResultsViewModel {
     let movie: String?
     let title: String?
-    var movies: [Movie]?
-    let totalPages: Int?
-    
-    let cache = NSCache<NSString, UIImage>()
+    var movies: [Movie]
+    let totalPages: Int
+    var currentPage: Int
+    let serviceController: MoviesFetchable = ServiceController()
 
-    init(movie: String?, results: MovieResults?) {
+    init(movie: String?, results: MovieResults) {
         self.movie = movie
         title = movie?.uppercased()
-        movies = results?.movies
-        totalPages = results?.totalPages
+        movies = results.movies
+        totalPages = results.totalPages
+        currentPage = results.page
     }
     
-    mutating func appendMovieResults(_ newMovies: [Movie]) {
-        movies?.append(contentsOf: newMovies)
-    }
-    
-    func removeAllCachedImages() {
-        cache.removeAllObjects()
+    mutating func processMovieResults(_ movieResults: MovieResults?) {
+        guard
+            let results = movieResults,
+            let newMovies = movieResults?.movies,
+            !newMovies.isEmpty else {
+                return
+        }
+        
+        currentPage = results.page
+        movies.append(contentsOf: newMovies)
     }
 }

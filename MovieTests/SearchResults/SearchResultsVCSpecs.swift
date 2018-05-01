@@ -56,7 +56,7 @@ class SearchResultsVCSpecs: QuickSpec {
                     controller.serviceController = serviceController
                     _ = controller.view
                     
-                    controller.tableView(UITableView(), willDisplay: UITableViewCell(), forRowAt: IndexPath(row: 1, section: (controller.viewModel?.movies?.count)! - 1))
+                    controller.tableView(UITableView(), willDisplay: UITableViewCell(), forRowAt: IndexPath(row: 1, section: (controller.viewModel?.movies.count)! - 1))
                 }
                 
                 it("should not call service", closure: {
@@ -74,7 +74,7 @@ class SearchResultsVCSpecs: QuickSpec {
                     controller.serviceController = serviceController
                     _ = controller.view
                     
-                    controller.tableView(UITableView(), willDisplay: UITableViewCell(), forRowAt: IndexPath(row: 1, section: (controller.viewModel?.movies?.count)! - 1))
+                    controller.tableView(UITableView(), willDisplay: UITableViewCell(), forRowAt: IndexPath(row: 1, section: (controller.viewModel?.movies.count)! - 1))
                 }
                 
                 it("should not call service", closure: {
@@ -93,8 +93,8 @@ class SearchResultsVCSpecs: QuickSpec {
                     controller.serviceController = serviceController
                     _ = controller.view
                     
-                    countBefore = controller.viewModel?.movies?.count
-                    controller.tableView(UITableView(), willDisplay: UITableViewCell(), forRowAt: IndexPath(row: 1, section: (controller.viewModel?.movies?.count)! - 1))
+                    countBefore = controller.viewModel?.movies.count
+                    controller.tableView(UITableView(), willDisplay: UITableViewCell(), forRowAt: IndexPath(row: 1, section: (controller.viewModel?.movies.count)! - 1))
                 }
                 
                 it("should call service", closure: {
@@ -102,7 +102,7 @@ class SearchResultsVCSpecs: QuickSpec {
                 })
                 
                 it("should increase movies count", closure: {
-                    expect(controller.viewModel?.movies?.count).toEventually(beGreaterThan(countBefore))
+                    expect(controller.viewModel?.movies.count).toEventually(beGreaterThan(countBefore))
                 })
             })
             
@@ -117,8 +117,8 @@ class SearchResultsVCSpecs: QuickSpec {
                     controller.serviceController = serviceController
                     _ = controller.view
                     
-                    countBefore = controller.viewModel?.movies?.count
-                    controller.tableView(UITableView(), willDisplay: UITableViewCell(), forRowAt: IndexPath(row: 1, section: (controller.viewModel?.movies?.count)! - 1))
+                    countBefore = controller.viewModel?.movies.count
+                    controller.tableView(UITableView(), willDisplay: UITableViewCell(), forRowAt: IndexPath(row: 1, section: (controller.viewModel?.movies.count)! - 1))
                 }
                 
                 it("should call service", closure: {
@@ -126,7 +126,7 @@ class SearchResultsVCSpecs: QuickSpec {
                 })
                 
                 it("should increase movies count", closure: {
-                    expect(controller.viewModel?.movies?.count).toEventually(equal(countBefore))
+                    expect(controller.viewModel?.movies.count).toEventually(equal(countBefore))
                 })
             })
         }

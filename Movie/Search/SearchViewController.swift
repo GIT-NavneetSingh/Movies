@@ -37,8 +37,9 @@ class SearchViewController: UIViewController {
         
         switch segueID {
         case .Detail:
+            guard let results = sender as? MovieResults else { return }
             let destinationVC = segue.destination as? SearchResultsVC
-            destinationVC?.viewModel = SearchResultsViewModel(movie: viewModel.searchQuery, results: sender as? MovieResults)
+            destinationVC?.viewModel = SearchResultsViewModel(movie: viewModel.searchQuery, results: results)
             
         case .Popover:
             let recentSearchVC = segue.destination as? RecentSearchVC

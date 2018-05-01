@@ -11,16 +11,16 @@ import Quick
 import Nimble
 @testable import Movie
 
-class MovieListViewModelSpecs: QuickSpec {
+class SearchResultsTableViewModelSpecs: QuickSpec {
     
     override func spec() {
         
-        var viewModel: SearchResultsViewModel!
+        var viewModel: SearchResultsTableViewModel!
         let movie = Movie(title: "Batman", overview: "Sample", releaseDate: "2012-05-01", posterPath: "somevalue")
         let results = MovieResults(page: 1, totalPages: 6, totalResults: 100, movies: [movie])
         
         beforeEach {
-            viewModel = SearchResultsViewModel(movie: "Batman", results: results)
+            viewModel = SearchResultsTableViewModel(movie: "Batman", results: results)
         }
         
         describe("Verify state of view model") {

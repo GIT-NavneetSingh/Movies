@@ -10,7 +10,7 @@ import UIKit
 
 class SearchResultsVC: UITableViewController {
     
-    var viewModel: SearchResultsViewModel?
+    var viewModel: SearchResultsTableViewModel?
     private let cache = NSCache<NSString, UIImage>()
     private var isLoading = false
     lazy var serviceController: MoviesFetchable = ServiceController()

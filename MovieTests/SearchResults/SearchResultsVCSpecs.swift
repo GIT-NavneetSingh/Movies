@@ -26,7 +26,7 @@ class SearchResultsVCSpecs: QuickSpec {
             let results = MovieResults(page: 1, totalPages: 6, totalResults: 100, movies: [movie])
 
             beforeEach {
-                controller.viewModel = SearchResultsViewModel(movie: "Batman", results: results)
+                controller.viewModel = SearchResultsTableViewModel(movie: "Batman", results: results)
                 _ = controller.view
             }
             
@@ -52,7 +52,7 @@ class SearchResultsVCSpecs: QuickSpec {
                 let results = MovieResults(page: 1, totalPages: 2, totalResults: 6, movies: [movie])
 
                 beforeEach {
-                    controller.viewModel = SearchResultsViewModel(movie: nil, results: results)
+                    controller.viewModel = SearchResultsTableViewModel(movie: nil, results: results)
                     controller.serviceController = serviceController
                     _ = controller.view
                     
@@ -70,7 +70,7 @@ class SearchResultsVCSpecs: QuickSpec {
                 let results = MovieResults(page: 1, totalPages: 1, totalResults: 1, movies: [movie])
                 
                 beforeEach {
-                    controller.viewModel = SearchResultsViewModel(movie: movie.title, results: results)
+                    controller.viewModel = SearchResultsTableViewModel(movie: movie.title, results: results)
                     controller.serviceController = serviceController
                     _ = controller.view
                     
@@ -89,7 +89,7 @@ class SearchResultsVCSpecs: QuickSpec {
                 
                 var countBefore: Int!
                 beforeEach {
-                    controller.viewModel = SearchResultsViewModel(movie: movie.title, results: results)
+                    controller.viewModel = SearchResultsTableViewModel(movie: movie.title, results: results)
                     controller.serviceController = serviceController
                     _ = controller.view
                     
@@ -113,7 +113,7 @@ class SearchResultsVCSpecs: QuickSpec {
                 
                 var countBefore: Int!
                 beforeEach {
-                    controller.viewModel = SearchResultsViewModel(movie: movie.title, results: results)
+                    controller.viewModel = SearchResultsTableViewModel(movie: movie.title, results: results)
                     controller.serviceController = serviceController
                     _ = controller.view
                     

@@ -39,7 +39,7 @@ class SearchViewController: UIViewController {
         case .Detail:
             guard let results = sender as? MovieResults else { return }
             let destinationVC = segue.destination as? SearchResultsVC
-            destinationVC?.viewModel = SearchResultsViewModel(movie: viewModel.searchQuery, results: results)
+            destinationVC?.viewModel = SearchResultsTableViewModel(movie: viewModel.searchQuery, results: results)
             
         case .Popover:
             let recentSearchVC = segue.destination as? RecentSearchVC

@@ -1,5 +1,5 @@
 //
-//  MovieListTableCellViewModelSpecs.swift
+//  SearchResultsTableCellViewModelSpecs.swift
 //  MovieTests
 //
 //  Created by Navneet on 4/30/18.
@@ -11,7 +11,7 @@ import Quick
 import Nimble
 @testable import Movie
 
-class MovieListTableCellViewModelSpecs: QuickSpec {
+class SearchResultsTableCellViewModelSpecs: QuickSpec {
     
     override func spec() {
         

@@ -1,5 +1,5 @@
 //
-//  SearchResultsViewModel.swift
+//  SearchResultsTableViewModel.swift
 //  Movie
 //
 //  Created by Navneet on 4/25/18.
@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: - View model for SearchResultsVC
 
-struct SearchResultsViewModel {
+struct SearchResultsTableViewModel {
     let movie: String?
     let title: String?
     var movies: [Movie]

@@ -20,7 +20,7 @@ class SearchViewController: UIViewController {
     }
     
     var viewModel = SearchViewModel(title: "Search", searchQuery: "")
-    lazy var serviceController: MoviesFetchable = ServiceController()
+    lazy var serviceController: Fetchable = ServiceController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +88,8 @@ class SearchViewController: UIViewController {
         
         hideSpinner(false)
         
-        serviceController.fetch(for: queryString, page: 1) { [weak self] (movieResults, error) in
+        let params = MovieParams(query: queryString, page: 1)
+        serviceController.fetch(with: params, completion: { [weak self] (movieResults, error) in
             DispatchQueue.main.async {
                 
                 self?.hideSpinner(true)
@@ -105,7 +106,7 @@ class SearchViewController: UIViewController {
                     self?.performSegue(withIdentifier: "DetailDegueID", sender: movieResults)
                 }
             }
-        }
+        })
     }
     
     // MARK: - Show alert

@@ -10,52 +10,24 @@ import Foundation
 import UIKit
 
 typealias CompletionBlock = ((_ results: MovieResults?, _ error: Error?) -> ())?
-typealias DownloadBlock = ((_ data: Data?) -> ())?
+typealias DownloadBlock = ((_ image: UIImage?, _ error: Error?) -> ())?
 
-protocol MoviesFetchable {
-    func fetch(for movie: String, page: Int, completion: CompletionBlock)
-}
-
-protocol DataDownloadable {
-    func downloadImage(from path: String, completion: DownloadBlock)
+protocol Fetchable {
+    func fetch(with params: Buildable, completion: CompletionBlock)
+    func download(with params: Buildable, completion: DownloadBlock)
 }
 
 // MARK: - ServiceController to handle netwoking
-struct ServiceController: MoviesFetchable, DataDownloadable {
-    
-    // MARK: -
-    private enum URLValue {
-        case movie(query: String, page: Int)
-        case image(path: String)
-        
-        var url: URL? {
-            switch self {
-            case .movie(let query, let page):
-                let baseURL = "http://api.themoviedb.org/3/search/movie?"
-                let apiKey = "api_key=2696829a81b1b5827d515ff121700838"
-                let urlStr = baseURL + apiKey + "&query=\(query)" + "&page=\(page)"
-                return URL(string: urlStr)
-                
-            case .image(let path):
-                let baseURL = "http://image.tmdb.org/t/p/w92"
-                let urlStr = baseURL + "\(path)"
-                return URL(string: urlStr)
-            }
-        }
-    }
+struct ServiceController: Fetchable {
     
     // MARK: - Fetch movie list
-    
-    func fetch(for movie: String, page: Int, completion: CompletionBlock) {
-        guard
-            let encodedString = movie.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URLValue.movie(query: encodedString, page: page).url
-            else {
-                completion?(nil, nil)
-                return
+    func fetch(with params: Buildable, completion: CompletionBlock) {
+        guard let request = params.build() else {
+            completion?(nil, nil)
+            return
         }
         
-        let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let dataTask = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
             guard error == nil, let data = data else {
                 completion?(nil, error)
                 return
@@ -63,30 +35,35 @@ struct ServiceController: MoviesFetchable, DataDownloadable {
             
             let results = try? JSONDecoder().decode(MovieResults.self, from: data)
             completion?(results, error)
-        }
+        })
         
         dataTask.resume()
+
     }
-    
+
     // MARK: - Download image of a movie
-    
-    func downloadImage(from path: String, completion: DownloadBlock) {
-        guard
-            let encodedPath = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URLValue.image(path: encodedPath).url else {
-                completion?(nil)
-                return
+
+    func download(with params: Buildable, completion: DownloadBlock) {
+        guard let request = params.build() else {
+            completion?(nil, nil)
+            return
         }
         
-        let downloadTask = URLSession.shared.downloadTask(with: url) { (tempURL, response, error) in
-            guard let url = tempURL else {
-                completion?(nil)
+        let downloadTask = URLSession.shared.downloadTask(with: request, completionHandler: { (tempURL, response, error) in
+            guard error == nil, let url = tempURL, let data = try? Data(contentsOf: url) else {
+                completion?(nil, error)
                 return
             }
-            
-            completion?(try? Data(contentsOf: url))
-        }
         
+            completion?(UIImage(data: data), nil)
+        })
+
         downloadTask.resume()
+    }
+}
+
+extension String {
+    var urlEncodedString: String? {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
 }

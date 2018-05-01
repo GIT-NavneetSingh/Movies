@@ -13,7 +13,7 @@ class SearchResultsVC: UITableViewController {
     var viewModel: SearchResultsTableViewModel?
     private let cache = NSCache<NSString, UIImage>()
     private var isLoading = false
-    lazy var serviceController: MoviesFetchable = ServiceController()
+    lazy var serviceController: Fetchable = ServiceController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,10 +67,12 @@ class SearchResultsVC: UITableViewController {
     private func fetchResults(for queryString: String?, page: Int, completion: @escaping () -> ()) {
         guard let queryString = queryString  else { return }
         isLoading = true
-        serviceController.fetch(for: queryString, page: page) { [weak self] (movieResults, error) in
+        
+        let params = MovieParams(query: queryString, page: page)
+        serviceController.fetch(with: params, completion: { [weak self] (movieResults, error) in
             self?.isLoading = false
             self?.viewModel?.processMovieResults(movieResults)
             completion()
-        }
+        })
     }
 }

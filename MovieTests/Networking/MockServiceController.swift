@@ -13,31 +13,58 @@ private class MockError: Error {
     
 }
 
-class MockSuccessMoviesServiceControllerWithResults: MoviesFetchable {
+class MockSuccessMoviesServiceControllerWithResults: Fetchable {
     var isCalled = false
-    func fetch(for movie: String, page: Int, completion: CompletionBlock) {
+    func fetch(with params: Buildable, completion: CompletionBlock) {
         isCalled = true
         
         let movie = Movie(title: "Batman", overview: "Sample", releaseDate: "2012-05-01", posterPath: "somevalue")
         let results = MovieResults(page: 1, totalPages: 6, totalResults: 100, movies: [movie])
         completion?(results, nil)
     }
+    
+    func download(with params: Buildable, completion: DownloadBlock) { }
 }
 
-class MockSuccessMoviesServiceControllerWithEmptyResults: MoviesFetchable {
+class MockSuccessMoviesServiceControllerWithEmptyResults: Fetchable {
     var isCalled = false
-    func fetch(for movie: String, page: Int, completion: CompletionBlock) {
+    func fetch(with params: Buildable, completion: CompletionBlock) {
         isCalled = true
         
         let results = MovieResults(page: 1, totalPages: 6, totalResults: 100, movies: [])
         completion?(results, nil)
     }
+    
+    func download(with params: Buildable, completion: DownloadBlock) { }
 }
 
-class MockFailureMoviesServiceController: MoviesFetchable {
+class MockFailureMoviesServiceController: Fetchable {
     var isCalled = false
-    func fetch(for movie: String, page: Int, completion: CompletionBlock) {
+    func fetch(with params: Buildable, completion: CompletionBlock) {
         isCalled = true
         completion?(nil, MockError())
     }
+    
+    func download(with params: Buildable, completion: DownloadBlock) { }
+}
+
+class MockSuccessServiceController: Fetchable {
+    var isCalled = false
+    
+    func download(with params: Buildable, completion: DownloadBlock) {
+        isCalled = true
+        completion?(#imageLiteral(resourceName: "default_image"), nil)
+    }
+    
+    func fetch(with params: Buildable, completion: CompletionBlock) { }
+}
+
+class MockFailureServiceController: Fetchable {
+    var isCalled = false
+    func download(with params: Buildable, completion: DownloadBlock) {
+        isCalled = true
+        completion?(nil, MockError())
+    }
+    
+    func fetch(with params: Buildable, completion: CompletionBlock) { }
 }

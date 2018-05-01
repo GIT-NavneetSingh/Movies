@@ -17,7 +17,6 @@ struct SearchResultsTableViewModel {
     var movies: [Movie]
     let totalPages: Int
     var currentPage: Int
-    let serviceController: MoviesFetchable = ServiceController()
 
     init(movie: String?, results: MovieResults) {
         self.movie = movie

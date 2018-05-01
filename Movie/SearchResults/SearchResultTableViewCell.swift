@@ -17,7 +17,12 @@ class SearchResultsTableViewCell: UITableViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var viewModel: SearchResultCellViewModel?
-    lazy var serviceController: DataDownloadable = ServiceController()
+    lazy var serviceController: Fetchable = ServiceController()
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        prepareForReuse()
+    }
     
     func configureView() {
         titleLabel.text = viewModel?.title
@@ -42,13 +47,27 @@ class SearchResultsTableViewCell: UITableViewCell {
     }
     
     private func fetchImage(from path: String?) {
+        guard let path = path else {
+            self.posterImgView.image = viewModel?.defaultImage
+            return
+        }
+        
         hideSpinner(false)
-        viewModel?.getImage { [weak self] image in
+        
+        let params = PosterImageParams(path: path)
+        serviceController.download(with: params, completion: { [weak self] (image, error) in
             DispatchQueue.main.async {
                 self?.hideSpinner(true)
+                
+                guard let image = image else {
+                    self?.posterImgView.image = self?.viewModel?.defaultImage
+                    return
+                }
+                
+                self?.viewModel?.imageCache?.setObject(image, forKey: path as NSString)
                 self?.posterImgView.image = image
             }
-        }
+        })
     }
     
     override func prepareForReuse() {

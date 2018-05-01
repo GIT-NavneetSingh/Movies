@@ -15,22 +15,6 @@ class SearchResultsTableCellViewSpecs: QuickSpec {
     
     override func spec() {
         
-        class MockSuccessServiceController: DataDownloadable {
-            var isCalled = false
-            func downloadImage(from path: String, completion: DownloadBlock) {
-                isCalled = true
-                completion?(UIImagePNGRepresentation(#imageLiteral(resourceName: "default_image")))
-            }
-        }
-    
-        class MockFailureServiceController: DataDownloadable {
-            var isCalled = false
-            func downloadImage(from path: String, completion: DownloadBlock) {
-                isCalled = true
-                completion?(nil)
-            }
-        }
-        
         var cell: SearchResultsTableViewCell!
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -70,10 +54,10 @@ class SearchResultsTableCellViewSpecs: QuickSpec {
 
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: nil)
                 let cache = NSCache<NSString, UIImage>()
-                var viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
-                viewModel.serviceController = serviceController
+                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
                 beforeEach {
                     cell.viewModel = viewModel
+                    cell.serviceController = serviceController
                     cell.configureView()
                 }
                 
@@ -87,20 +71,16 @@ class SearchResultsTableCellViewSpecs: QuickSpec {
 
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
                 let cache = NSCache<NSString, UIImage>()
-                var viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
-                viewModel.serviceController = serviceController
+                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
 
                 beforeEach {
                     cell.viewModel = viewModel
+                    cell.serviceController = serviceController
                     cell.configureView()
                 }
 
                 it("should called serviceController", closure: {
                     expect(serviceController.isCalled).to(beTruthy())
-                })
-                
-                it("should set image to imageview" , closure: {
-                    expect(cell.posterImgView.image).notTo(beNil())
                 })
             })
             
@@ -108,11 +88,11 @@ class SearchResultsTableCellViewSpecs: QuickSpec {
                 let serviceController = MockFailureServiceController()
                 let movie = Movie(title: "Batman", overview: "Some Value", releaseDate: "2015-10-01", posterPath: "some value")
                 let cache = NSCache<NSString, UIImage>()
-                var viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
-                viewModel.serviceController = serviceController
+                let viewModel = SearchResultCellViewModel(movie: movie, cache: cache)
 
                 beforeEach {
                     cell.viewModel = viewModel
+                    cell.serviceController = serviceController
                     cell.configureView()
                 }
                 

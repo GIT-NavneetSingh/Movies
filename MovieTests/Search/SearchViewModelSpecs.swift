@@ -31,7 +31,7 @@ class SearchViewModelSpecs: QuickSpec {
             })
         }
         
-        fdescribe("Verify persisted data") {
+        describe("Verify persisted data") {
             afterEach {
                 UserDefaults.standard.removeObject(forKey: "RecentSearchedMovies")
             }

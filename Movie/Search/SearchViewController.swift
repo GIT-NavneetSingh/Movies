@@ -19,14 +19,14 @@ class SearchViewController: UIViewController {
         case Popover = "PopoverSegueID"
     }
     
-    private var searchQuery: String?
+    var viewModel = SearchViewModel()
     lazy var serviceController: MoviesFetchable = ServiceController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        title = "Search"
+        title = viewModel.title
         txtField.becomeFirstResponder()
     }
     
@@ -38,9 +38,7 @@ class SearchViewController: UIViewController {
         switch segueID {
         case .Detail:
             let destinationVC = segue.destination as? SearchResultsVC
-            destinationVC?.viewModel = SearchResultsViewModel(movie: searchQuery, results: sender as? MovieResults)
-            
-            persistSearchQuery(searchQuery)
+            destinationVC?.viewModel = SearchResultsViewModel(movie: viewModel.searchQuery, results: sender as? MovieResults)
             
         case .Popover:
             let recentSearchVC = segue.destination as? RecentSearchVC
@@ -68,6 +66,17 @@ class SearchViewController: UIViewController {
     
     // MARK: - Fetch sesults for the query string
     
+    fileprivate func hideSpinner(_ hide: Bool) {
+        if hide {
+            activityIndicator.stopAnimating()
+        } else {
+            activityIndicator.startAnimating()
+        }
+
+        activityIndicatorView.isHidden = hide
+        activityIndicator.isHidden = hide
+    }
+    
     func fetchResults(for queryString: String?) {
         txtField.resignFirstResponder()
 
@@ -76,26 +85,22 @@ class SearchViewController: UIViewController {
             return
         }
         
-        activityIndicatorView.isHidden = false
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
+        hideSpinner(false)
         
         serviceController.fetch(for: queryString, page: 1) { [weak self] (movieResults, error) in
             DispatchQueue.main.async {
                 
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
-                self?.activityIndicatorView.isHidden = true
+                self?.hideSpinner(true)
                 
                 if error != nil {
                     self?.showOkAlert(with: "Error", message: "Something went wrong")
                 } else {
-                    guard (movieResults?.movies.count ?? 0) > 0 else {
+                    guard let movies = movieResults?.movies, movies.count > 0 else {
                         self?.showOkAlert(with: nil, message: "Movie not found, try something else")
                         return
                     }
                     
-                    self?.searchQuery = queryString
+                    self?.viewModel.persistSearchQuery(queryString)
                     self?.performSegue(withIdentifier: "DetailDegueID", sender: movieResults)
                 }
             }
@@ -106,28 +111,8 @@ class SearchViewController: UIViewController {
 
     private func showOkAlert(with title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
-    }
-    
-    // MARK: - Persist Searches
-    
-    fileprivate func persistSearchQuery(_ query: String?) {
-        guard let query = query?.lowercased() else { return }
-        
-        let userDefault = UserDefaults.standard
-        if var list = userDefault.array(forKey: "RecentSearchedMovies") as? [String] {
-            if let index = list.index(of: query) {
-                list.remove(at: index)
-            }
-            
-            list.insert(query, at: 0)
-            userDefault.set(list, forKey: "RecentSearchedMovies")
-            userDefault.synchronize()
-        } else {
-            userDefault.set([query], forKey: "RecentSearchedMovies")
-            userDefault.synchronize()
-        }
     }
 }
 

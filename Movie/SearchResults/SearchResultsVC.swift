@@ -35,8 +35,6 @@ class SearchResultsVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: SearchResultsTableViewCell.self), for: indexPath)
-
-        // Configure the cell...
         if let cell = cell as? SearchResultsTableViewCell {
             cell.viewModel = SearchResultCellViewModel(movie: viewModel?.movies[indexPath.section], cache: cache)
             cell.configureView()
@@ -63,7 +61,6 @@ class SearchResultsVC: UITableViewController {
     }
     
     // MARK: - Fetch results
-    
     private func fetchResults(for queryString: String?, page: Int, completion: @escaping () -> ()) {
         guard let queryString = queryString  else { return }
         isLoading = true

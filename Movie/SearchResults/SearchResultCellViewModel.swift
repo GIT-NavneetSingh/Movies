@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 // MARK: - View model for SearchResultsVC'table cell
-
 struct SearchResultCellViewModel {
     let imageCache: NSCache<NSString, UIImage>?
     let title: String?

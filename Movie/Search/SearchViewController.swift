@@ -23,9 +23,7 @@ class SearchViewController: UIViewController {
     lazy var serviceController: Fetchable = ServiceController()
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
+        super.viewDidLoad()        
         title = viewModel.title
         txtField.becomeFirstResponder()
     }
@@ -51,7 +49,6 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - IBAction
-    
     @IBAction func didTouchDownTextField(_ sender: UITextField) {
         guard
             let list = UserDefaults.standard.array(forKey: "RecentSearchedMovies") as? [String],
@@ -66,7 +63,6 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - Fetch sesults for the query string
-    
     fileprivate func hideSpinner(_ hide: Bool) {
         if hide {
             activityIndicator.stopAnimating()
@@ -110,7 +106,6 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - Show alert
-
     private func showOkAlert(with title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -119,27 +114,21 @@ class SearchViewController: UIViewController {
 }
 
 // MARK: - Textfield delegate
-
 extension SearchViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }
 }
 
 // MARK: - UIPopover presentation delegate
-
 extension SearchViewController: UIPopoverPresentationControllerDelegate {
-    
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
     }
 }
 
 // MARK: - Recent search delegate
-
 extension SearchViewController: RecentSearchProtocol {
-
     func controller(_ controller: RecentSearchVC, didSelectItem item: String?) {
         controller.dismiss(animated: false) {
             self.txtField.text = item

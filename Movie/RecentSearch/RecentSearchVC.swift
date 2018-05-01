@@ -25,7 +25,6 @@ class RecentSearchVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellReuseIdentifier", for: indexPath)
-        // Configure the cell...
         cell.textLabel?.text = viewModel.items?[indexPath.row]
         return cell
     }

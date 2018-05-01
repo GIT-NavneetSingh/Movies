@@ -14,7 +14,6 @@ struct SearchViewModel {
     var searchQuery: String
 
     // MARK: - Persist Searches
-    
     mutating func persistSearchQuery(_ query: String?) {
         guard let query = query?.lowercased() else { return }
         

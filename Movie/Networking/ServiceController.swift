@@ -42,7 +42,6 @@ struct ServiceController: Fetchable {
     }
 
     // MARK: - Download image of a movie
-
     func download(with params: Buildable, completion: DownloadBlock) {
         guard let request = params.build() else {
             completion?(nil, nil)

@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 // MARK: - View model for SearchResultsVC
-
 struct SearchResultsTableViewModel {
     let movie: String?
     let title: String?

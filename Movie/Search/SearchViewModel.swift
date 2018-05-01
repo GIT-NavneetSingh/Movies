@@ -10,8 +10,8 @@ import Foundation
 
 struct SearchViewModel {
     
-    let title = "Search"
-    var searchQuery = ""
+    let title: String
+    var searchQuery: String
 
     // MARK: - Persist Searches
     

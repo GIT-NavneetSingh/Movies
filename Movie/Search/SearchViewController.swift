@@ -19,7 +19,7 @@ class SearchViewController: UIViewController {
         case Popover = "PopoverSegueID"
     }
     
-    var viewModel = SearchViewModel()
+    var viewModel = SearchViewModel(title: "Search", searchQuery: "")
     lazy var serviceController: MoviesFetchable = ServiceController()
 
     override func viewDidLoad() {

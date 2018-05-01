@@ -210,10 +210,10 @@
 				5347989320905F16004F1F43 /* Info.plist */,
 				5347989020905F16004F1F43 /* LaunchScreen.storyboard */,
 				5347988820905F14004F1F43 /* Main.storyboard */,
+				531B5CC02095CF4F00193FCE /* Search */,
+				531B5CBF2095CF4300193FCE /* RecentSearch */,
 				531B5CBE2095CF1600193FCE /* SearchResults */,
 				531B5CBD2095CF0300193FCE /* Networking */,
-				531B5CBF2095CF4300193FCE /* RecentSearch */,
-				531B5CC02095CF4F00193FCE /* Search */,
 			);
 			path = Movie;
 			sourceTree = "<group>";
@@ -223,10 +223,10 @@
 			children = (
 				5347989E20905F16004F1F43 /* Info.plist */,
 				5347989C20905F16004F1F43 /* MovieTests.swift */,
+				531B5CC72096504800193FCE /* Search */,
+				531B5CC82096505800193FCE /* RecentSearch */,
 				531B5CCA209650C700193FCE /* SearchResults */,
 				531B5CC92096506600193FCE /* Networking */,
-				531B5CC82096505800193FCE /* RecentSearch */,
-				531B5CC72096504800193FCE /* Search */,
 			);
 			path = MovieTests;
 			sourceTree = "<group>";
